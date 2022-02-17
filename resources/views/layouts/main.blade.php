@@ -175,7 +175,7 @@
                     </li>
                     <li class="dropdown nav-item {{ (request()->is('news*')) ? 'active' : '' }}">
                         <a class="nav-link d-flex align-items-center" href="{{ url('/news') }}"><i data-feather="file-text"></i>
-                            <span>News</span>
+                            <span>Berita</span>
                         </a>
                     </li>
                     <li class="dropdown nav-item {{ (request()->is('tournament*')) ? 'active' : '' }}">

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title') News @endsection
+@section('title') Berita @endsection
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/page-blog.css') }}">
@@ -16,12 +16,12 @@
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">News</h2>
+                        <h2 class="content-header-title float-left mb-0">Berita</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a>
                                 </li>
-                                <li class="breadcrumb-item active">News
+                                <li class="breadcrumb-item active">Berita
                                 </li>
                             </ol>
                         </div>
@@ -68,7 +68,7 @@
                                     </p>
                                     <hr />
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <a href="#" class="font-weight-bold">Read More</a>
+                                        <a href="#" class="font-weight-bold">Selengkapnya</a>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                                     </p>
                                     <hr />
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <a href="#" class="font-weight-bold">Read More</a>
+                                        <a href="#" class="font-weight-bold">Selengkapnya</a>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +158,7 @@
 
                     <!-- Recent Posts -->
                     <div class="blog-recent-posts mt-3">
-                        <h6 class="section-label">Recent News</h6>
+                        <h6 class="section-label">Berita Terakhir</h6>
                         <div class="mt-75">
                             <div class="media mb-2">
                                 <a href="page-blog-detail.html" class="mr-2">

@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\WinnerController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TournamentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,25 +19,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [GlobalController::class, 'home']);
 
-Route::get('/profile', function () {
-    return view('profile.show');
-});
+// profile
+Route::get('profile', [ProfileController::class, 'show']);
 
-Route::get('/news', function () {
-    return view('news');
-});
+// news
+Route::get('news', [NewsController::class, 'index']);
 
-Route::get('/tournament', function () {
-    return view('tournament');
-});
+// tournament
+Route::get('tournament', [TournamentController::class, 'index']);
+Route::get('tournament/detail', [TournamentController::class, 'detail']);
 
-Route::get('/pemenang', function () {
-    return view('pemenang');
-});
+// winner
+Route::get('pemenang', [WinnerController::class, 'index']);
+
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');
