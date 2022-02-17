@@ -128,12 +128,12 @@
                         <a class="dropdown-item" href="{{ url('/login') }}">
                             <i class="mr-50" data-feather="log-in"></i> Login
                         </a>
-                        <!-- <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ url('/profile') }}">
                             <i class="mr-50" data-feather="user"></i> Profile
                         </a>
                         <a class="dropdown-item" href="#">
                             <i class="mr-50" data-feather="power"></i> Logout
-                        </a> -->
+                        </a>
                     </div>
                 </li>
             </ul>
@@ -202,6 +202,9 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light footer-shadow">
+        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25"></p>
+    </footer>
     <footer class="footer footer-static footer-light footer-shadow">
         <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2021</p>
     </footer>
