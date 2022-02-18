@@ -26,6 +26,7 @@ Route::get('profile', [ProfileController::class, 'show']);
 
 // news
 Route::get('news', [NewsController::class, 'index']);
+Route::get('news/detail', [NewsController::class, 'detail']);
 
 // tournament
 Route::get('tournament', [TournamentController::class, 'index']);

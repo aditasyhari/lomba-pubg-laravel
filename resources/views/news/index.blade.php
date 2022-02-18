@@ -37,12 +37,12 @@
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="card">
-                                <a href="page-blog-detail.html">
+                                <a href="{{ url('/news/detail') }}">
                                     <img class="card-img-top img-fluid" src="../../../app-assets/images/slider/02.jpg" alt="Blog Post pic" />
                                 </a>
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        <a href="page-blog-detail.html" class="blog-title-truncate text-body-heading">The Best Features Coming to iOS and Web design</a>
+                                        <a href="{{ url('/news/detail') }}" class="blog-title-truncate text-body-heading">The Best Features Coming to iOS and Web design</a>
                                     </h4>
                                     <div class="media">
                                         <div class="avatar mr-50">
@@ -68,46 +68,7 @@
                                     </p>
                                     <hr />
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <a href="#" class="font-weight-bold">Selengkapnya</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12">
-                            <div class="card">
-                                <a href="page-blog-detail.html">
-                                    <img class="card-img-top img-fluid" src="../../../app-assets/images/slider/02.jpg" alt="Blog Post pic" />
-                                </a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="page-blog-detail.html" class="blog-title-truncate text-body-heading">The Best Features Coming to iOS and Web design</a>
-                                    </h4>
-                                    <div class="media">
-                                        <div class="avatar mr-50">
-                                            <img src="../../../app-assets/images/portrait/small/avatar-s-7.jpg" alt="Avatar" width="24" height="24" />
-                                        </div>
-                                        <div class="media-body">
-                                            <small class="text-muted mr-25">by</small>
-                                            <small><a href="javascript:void(0);" class="text-body">Ghani Pradita</a></small>
-                                            <span class="text-muted ml-50 mr-25">|</span>
-                                            <small class="text-muted">Jan 10, 2020</small>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="my-1 py-25">
-                                        <a href="javascript:void(0);">
-                                            <div class="badge badge-pill badge-light-info mr-50">Quote</div>
-                                        </a>
-                                        <a href="javascript:void(0);">
-                                            <div class="badge badge-pill badge-light-primary">Fashion</div>
-                                        </a>
-                                    </div> -->
-                                    <p class="card-text blog-content-truncate">
-                                        Donut fruitcake soufflé apple pie candy canes jujubes croissant chocolate bar ice cream.
-                                    </p>
-                                    <hr />
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <a href="#" class="font-weight-bold">Selengkapnya</a>
+                                        <a href="{{ url('/news/detail') }}" class="font-weight-bold">Selengkapnya</a>
                                     </div>
                                 </div>
                             </div>
