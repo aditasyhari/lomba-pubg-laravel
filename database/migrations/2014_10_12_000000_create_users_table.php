@@ -13,17 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('phone', 15)->nullable();
+        Schema::create('user', function (Blueprint $table) {
+            $table->id('id_user');
+            $table->string('nama');
+            $table->string('no_hp', 15)->nullable();
             $table->string('email')->unique();
+            $table->text('alamat')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['admin', 'peserta', 'penyelenggara'])->default('peserta');
             $table->rememberToken();
-            $table->boolean('is_admin')->default(false);
-            $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path')->nullable();
+            $table->string('foto')->nullable();
+            $table->string('google_foto')->nullable();
             $table->string('google_id')->nullable();
             $table->timestamps();
         });
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user');
     }
 };
