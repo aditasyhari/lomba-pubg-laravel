@@ -16,11 +16,20 @@
                 <h4 class="card-title mb-1">Petualangan dimulai di sini 🚀</h4>
                 <p class="card-text mb-2">Jadikan manajemen lomba Anda mudah dan menyenangkan!</p>
 
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form class="auth-register-form mt-2" action="{{ route('register') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="register-username" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="register-username" name="name" placeholder="nama anda" aria-describedby="register-username" tabindex="1" autofocus required/>
+                        <input type="text" class="form-control" id="register-username" name="nama" placeholder="nama anda" aria-describedby="register-username" tabindex="1" autofocus required/>
                     </div>
                     <div class="form-group">
                         <label for="register-email" class="form-label">Email</label>
@@ -51,13 +60,14 @@
 
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" name="terms" id="register-privacy-policy" tabindex="4" />
-                            <label class="custom-control-label" for="register-privacy-policy">
+                            <input class="custom-control-input" type="checkbox" name="terms" id="privacy-policy" tabindex="4" onclick="cek()"/>
+                            <label class="custom-control-label" for="privacy-policy">
                                 I agree to <a href="javascript:void(0);">privacy policy & terms</a>
                             </label>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-block" tabindex="5">Daftar</button>
+
+                    <button class="btn btn-primary btn-block" type="submit" id="btn-submit" tabindex="5" disabled>Daftar</button>
                 </form>
 
                 <p class="text-center mt-2">
@@ -67,18 +77,25 @@
                     </a>
                 </p>
 
-                <div class="divider my-2">
-                    <div class="divider-text">atau</div>
-                </div>
-
-                <div class="auth-footer-btn d-flex justify-content-center">
-                    <a href="javascript:void(0)" class="btn btn-google">
-                        <i data-feather="mail"></i> Google
-                    </a>
-                </div>
             </div>
         </div>
         <!-- /Login v1 -->
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    var btnSubmit = document.getElementById('btn-submit');
+
+    function cek() {
+        var centang = document.getElementById('privacy-policy');
+
+        if(centang.checked == true) {
+            btnSubmit.removeAttribute('disabled');
+        } else {
+            btnSubmit.disabled = true
+        }
+    }
+</script>
 @endsection

@@ -16,6 +16,11 @@
                 <h4 class="card-title mb-1">Selamat Datang di PUBG Esports! 👋</h4>
                 <p class="card-text mb-2">Silakan masuk ke akun Anda dan mulai petualangan</p>
 
+                @if ($message = Session::get('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ $message }}
+                    </div>
+                @endif
                 <form class="auth-login-form mt-2" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="form-group">
@@ -24,12 +29,6 @@
                     </div>
 
                     <div class="form-group">
-                        <!-- <div class="d-flex justify-content-between">
-                            <label for="login-password">Password</label>
-                            <a href="page-auth-forgot-password-v1.html">
-                                <small>Forgot Password?</small>
-                            </a>
-                        </div> -->
                         <div class="input-group input-group-merge form-password-toggle">
                             <input type="password" class="form-control form-control-merge" id="login-password" name="password" tabindex="2" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="login-password" autofocus required />
                             <div class="input-group-append">
@@ -37,12 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="remember-me" name="remember" tabindex="3" />
-                            <label class="custom-control-label" for="remember-me"> Remember Me </label>
-                        </div>
-                    </div>
+
                     <button type="submit" class="btn btn-primary btn-block" tabindex="4">Masuk</button>
                 </form>
 
@@ -58,7 +52,7 @@
                 </div>
 
                 <div class="auth-footer-btn d-flex justify-content-center">
-                    <a href="javascript:void(0)" class="btn btn-google">
+                    <a href="{{ url('auth/google') }}" class="btn btn-google">
                         <i data-feather="mail"></i> Google
                     </a>
                 </div>

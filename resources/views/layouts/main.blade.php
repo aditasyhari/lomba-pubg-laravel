@@ -115,26 +115,33 @@
                     </ul>
                 </li> -->
                 <li class="nav-item dropdown dropdown-user">
-                    <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <!-- <div class="user-nav d-sm-flex d-none">
-                            <span class="user-name font-weight-bolder">Admin</span><span class="user-status">Admin</span>
-                        </div> -->
-                        <span class="avatar">
-                            <img class="round" src="{{ asset('images/default.jpg') }}" alt="avatar" height="40" width="40">
-                            <!-- <span class="avatar-status-online"></span> -->
-                        </span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
-                        <a class="dropdown-item" href="{{ url('/login') }}">
+                    @auth
+                        <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!-- <div class="user-nav d-sm-flex d-none">
+                                <span class="user-name font-weight-bolder">Admin</span><span class="user-status">Admin</span>
+                            </div> -->
+                            <span class="avatar">
+                                <img class="round" src="{{ asset('images/default.jpg') }}" alt="avatar" height="40" width="40">
+                                <span class="avatar-status-online"></span>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
+                            <a class="dropdown-item" href="{{ url('/profile') }}">
+                                <i class="mr-50" data-feather="user"></i> Profile
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();this.closest('form').submit();">
+                                    <i class="mr-50" data-feather="power"></i> Logout
+                                </a>
+                            </form>
+                        </div>
+                    @endauth
+                    @guest
+                        <a class="btn btn-primary ml-50" href="{{ url('/login') }}">
                             <i class="mr-50" data-feather="log-in"></i> Login
                         </a>
-                        <a class="dropdown-item" href="{{ url('/profile') }}">
-                            <i class="mr-50" data-feather="user"></i> Profile
-                        </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="mr-50" data-feather="power"></i> Logout
-                        </a>
-                    </div>
+                    @endguest
                 </li>
             </ul>
         </div>

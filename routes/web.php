@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\WinnerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TournamentController;
 
 /*
@@ -18,6 +21,12 @@ use App\Http\Controllers\TournamentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/', [GlobalController::class, 'home']);
 
