@@ -25,9 +25,9 @@ class Transaksi extends Migration
             $table->unsignedBigInteger('id_peserta');
             $table->timestamps();
 
-            $table->foreign('id_tournament')->references('id_tournament')->on('tournament')->nullOnDelete()->onUpdate('cascade');
-            $table->foreign('id_penyelenggara')->references('id_user')->on('user')->nullOnDelete()->onUpdate('cascade');
-            $table->foreign('id_peserta')->references('id_user')->on('user')->nullOnDelete()->onUpdate('cascade');
+            $table->foreign('id_tournament')->references('id_tournament')->on('tournament');
+            $table->foreign('id_penyelenggara')->references('id_user')->on('user');
+            $table->foreign('id_peserta')->references('id_user')->on('user');
         });
     }
 

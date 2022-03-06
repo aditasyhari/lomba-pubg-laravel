@@ -27,7 +27,7 @@ class Tournament extends Migration
             $table->longText('deskripsi');
             $table->string('thumbnail');
             $table->string('file')->nullable();
-            $table->foreignId('id_penyelenggara')->references('id_user')->on('user')->nullOnDelete()->onUpdate('cascade');
+            $table->foreignId('id_penyelenggara')->references('id_user')->on('user');
             $table->timestamps();
         });
     }
