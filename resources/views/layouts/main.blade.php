@@ -121,7 +121,11 @@
                                 <span class="user-name font-weight-bolder">Admin</span><span class="user-status">Admin</span>
                             </div> -->
                             <span class="avatar">
+                                @if(Auth::user()->foto == '' || Auth::user()->foto == null)
                                 <img class="round" src="{{ asset('images/default.jpg') }}" alt="avatar" height="40" width="40">
+                                @else
+                                <img class="round" src="{{ url('storage/images/profile/'.Auth::user()->foto) }}" alt="avatar" height="40" width="40">
+                                @endif
                                 <span class="avatar-status-online"></span>
                             </span>
                         </a>
@@ -226,7 +230,7 @@
     <!-- BEGIN: Page Vendor JS-->
     <script src="{{ asset('app-assets/vendors/js/ui/jquery.sticky.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/charts/apexcharts.min.js') }}"></script>
-    <!-- <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script> -->
+    <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/moment.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>

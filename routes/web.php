@@ -31,7 +31,13 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/', [GlobalController::class, 'home']);
 
 // profile
-Route::get('profile', [ProfileController::class, 'show']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('profile', [ProfileController::class, 'show']);
+    Route::put('profile/update-general', [ProfileController::class, 'updateGeneral']);
+    Route::put('profile/update-foto', [ProfileController::class, 'updateFoto']);
+    Route::put('profile/update-password', [ProfileController::class, 'updatePassword']);
+});
 
 // news
 Route::get('news', [NewsController::class, 'index']);
