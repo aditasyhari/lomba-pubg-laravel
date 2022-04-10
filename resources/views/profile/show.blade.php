@@ -145,7 +145,7 @@
                                                         @if($user->email_verified_at == null)
                                                         <h4 class="alert-heading">Email anda belum terverifikasi.</h4>
                                                         <div class="alert-body">
-                                                            <a href="javascript: void(0);" class="alert-link">Kirim email verifikasi</a>
+                                                            <a href="{{ url('/email/verify') }}" target="_blank" class="alert-link">Kirim email verifikasi</a>
                                                         </div>
                                                         @endif
                                                     </div>
