@@ -12,4 +12,29 @@ function uploads($file, $path)
     return $fileName;
 }
 
+function tanggal_indonesia($tanggal)
+{
+	$bulan = [
+		'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    ];
+
+    $var = explode('-', $tanggal);
+
+    // var 0 = tanggal
+    // var 1 = bulan
+    // var 2 = tahun
+    return $var[2] . ' ' . $bulan[ (int)$var[1] ] . ' ' . $var[0];
+}
+
 ?>

@@ -16,7 +16,8 @@ class Berita extends Migration
         //
         Schema::create('berita', function (Blueprint $table) {
             $table->id('id_berita');
-            $table->string('judul');
+            $table->string('judul')->unique();
+            $table->string('slug')->unique();
             $table->longText('isi');
             $table->string('tag');
             $table->string('thumbnail');

@@ -30,7 +30,31 @@
                     </div>
                 </div>
             </div>
-            
+            @if(Auth::user()->role == 'admin')
+            <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                <div class="form-group breadcrumb-right">
+                    <div class="dropdown">
+                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i data-feather="grid"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ url('/news/edit/'.$data->slug) }}">
+                                <i class="mr-1" data-feather="edit-2"></i>
+                                <span class="align-middle">Edit</span>
+                            </a>
+                            <form id="form-delete" action="{{ url('/news/detail/delete/'.$data->id_berita) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <a class="dropdown-item" id="delete" href="#">
+                                    <i class="mr-1" data-feather="trash-2"></i>
+                                    <span class="align-middle">Hapus</span>
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
         <div class="content-detached content-left">
             <div class="content-body">
@@ -40,40 +64,46 @@
                         <!-- Blog -->
                         <div class="col-12">
                             <div class="card">
-                                <img src="../../../app-assets/images/banner/banner-12.jpg" class="img-fluid card-img-top" alt="Blog Detail Pic" />
+                                <img src="{{ url('storage/images/berita/thumbnail/'.$data->thumbnail) }}" class="img-fluid card-img-top" alt="Blog Detail Pic" />
                                 <div class="card-body">
-                                    <h4 class="card-title">The Best Features Coming to iOS and Web design</h4>
+                                    <h4 class="card-title">{{ $data->judul }}</h4>
                                     <div class="media">
                                         <div class="avatar mr-50">
-                                            <img src="../../../app-assets/images/portrait/small/avatar-s-7.jpg" alt="Avatar" width="24" height="24" />
+                                            @if($data->pembuat->foto == '' || $data->pembuat->foto == null)
+                                            <img src="{{ asset('images/default.jpg') }}" alt="Avatar" width="24" height="24" />
+                                            @else
+                                            <img src="{{ url('storage/images/profile/'.$data->pembuat->foto) }}" alt="Avatar" width="24" height="24" />
+                                            @endif
                                         </div>
                                         <div class="media-body">
                                             <small class="text-muted mr-25">by</small>
-                                            <small><a href="javascript:void(0);" class="text-body">Ghani Pradita</a></small>
+                                            <small><a href="javascript:void(0);" class="text-body text-capitalize">{{ $data->pembuat->nama }}</a></small>
                                             <span class="text-muted ml-50 mr-25">|</span>
-                                            <small class="text-muted">Jan 10, 2020</small>
+                                            <small class="text-muted">{{ tanggal_indonesia(date("Y-m-d", strtotime($data->created_at))) }}</small>
                                         </div>
                                     </div>
                                     <div class="my-1 py-25">
-                                        <a href="javascript:void(0);">
-                                            <div class="badge badge-pill badge-light-danger mr-50">Gaming</div>
-                                        </a>
-                                        <a href="javascript:void(0);">
-                                            <div class="badge badge-pill badge-light-warning">Video</div>
-                                        </a>
+                                        @foreach(explode(',', $data->tag) as $info)
+                                            <a href="javascript:void(0);">
+                                            @switch($info)
+                                                @case('Gaming')
+                                                    <div class="badge badge-pill badge-light-danger mr-50">{{ $info }}</div>
+                                                    @break
+                                                @case('Video')
+                                                    <div class="badge badge-pill badge-light-warning mr-50">{{ $info }}</div>
+                                                    @break
+                                                @default
+                                                    <div class="badge badge-pill badge-light-info mr-50">{{ $info }}</div>
+                                                    @break
+                                            @endswitch
+                                            </a>
+                                        @endforeach
                                     </div>
                                     <p class="card-text mb-2">
-                                        Before you get into the nitty-gritty of coming up with a perfect title, start with a rough draft: your
-                                        working title. What is that, exactly? A lot of people confuse working titles with topics. Let's clear that
-                                        Topics are very general and could yield several different blog posts. Think "raising healthy kids," or
-                                        "kitchen storage." A writer might look at either of those topics and choose to take them in very, very
-                                        different directions.A working title, on the other hand, is very specific and guides the creation of a
-                                        single blog post. For example, from the topic "raising healthy kids," you could derive the following working
-                                        title See how different and specific each of those is? That's what makes them working titles, instead of
-                                        overarching topics.
+                                        {!! $data->isi !!}
                                     </p>
                                     
-                                    <div class="media">
+                                    <!-- <div class="media">
                                         <div class="avatar mr-2">
                                             <img src="../../../app-assets/images/portrait/small/avatar-s-6.jpg" width="60" height="60" alt="Avatar" />
                                         </div>
@@ -84,7 +114,7 @@
                                                 and quotes by influential creatives and web designer around the world.
                                             </p>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <hr class="my-2" />
                                     <div class="d-flex align-items-center justify-content-between">
                                         <!-- <div class="d-flex align-items-center">
@@ -108,12 +138,6 @@
                                         <div class="dropdown blog-detail-share">
                                             <i data-feather="share-2" class="font-medium-5 text-body cursor-pointer" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="javascript:void(0);" class="dropdown-item py-50 px-1">
-                                                    <i data-feather="github" class="font-medium-3"></i>
-                                                </a>
-                                                <a href="javascript:void(0);" class="dropdown-item py-50 px-1">
-                                                    <i data-feather="gitlab" class="font-medium-3"></i>
-                                                </a>
                                                 <a href="javascript:void(0);" class="dropdown-item py-50 px-1">
                                                     <i data-feather="facebook" class="font-medium-3"></i>
                                                 </a>
@@ -147,12 +171,12 @@
                                                 A variation on the question technique above, the multiple-choice question great way to engage your
                                                 reader.
                                             </p>
-                                            <a href="javascript:void(0);">
+                                            <!-- <a href="javascript:void(0);">
                                                 <div class="d-inline-flex align-items-center">
                                                     <i data-feather="corner-up-left" class="font-medium-3 mr-50"></i>
                                                     <span>Reply</span>
                                                 </div>
-                                            </a>
+                                            </a> -->
                                         </div>
                                     </div>
                                 </div>
@@ -204,20 +228,21 @@
                     <!-- Recent Posts -->
                     <div class="blog-recent-posts mt-3">
                         <h6 class="section-label">Berita Terakhir</h6>
+                        @foreach($new as $n)
                         <div class="mt-75">
                             <div class="media mb-2">
-                                <a href="page-blog-detail.html" class="mr-2">
-                                    <img class="rounded" src="../../../app-assets/images/banner/banner-22.jpg" width="100" height="70" alt="Recent Post Pic" />
+                                <a href="{{ url('/news/detail/'.$n->slug) }}" class="mr-2">
+                                    <img class="rounded" src="{{ url('storage/images/berita/thumbnail/'.$n->thumbnail) }}" width="100" height="70" alt="Thumbnail" />
                                 </a>
                                 <div class="media-body">
                                     <h6 class="blog-recent-post-title">
-                                        <a href="page-blog-detail.html" class="text-body-heading">Why Should Forget Facebook?</a>
+                                        <a href="{{ url('/news/detail/'.$n->slug) }}" class="text-body-heading">{{ $n->judul }}</a>
                                     </h6>
-                                    <div class="text-muted mb-0">Jan 14 2020</div>
+                                    <div class="text-muted mb-0">{{ tanggal_indonesia(date("Y-m-d", strtotime($n->created_at))) }}</div>
                                 </div>
                             </div>
-
                         </div>
+                        @endforeach
                     </div>
                     <!--/ Recent Posts -->
 
@@ -231,4 +256,32 @@
 @endsection
 
 @section('js')
+<script>
+    $('#delete').on('click', function(e) {
+        e.preventDefault();
+        let form = $('#form-delete');
+        Swal.fire({
+            title: '<strong>Hapus Berita?</strong>',
+            icon: 'info',
+            html:
+            'Jika dihapus, data tidak dapat dikembalikan!',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: 'Hapus',
+            // confirmButtonAriaLabel: 'Thumbs up, great!',
+            cancelButtonText: feather.icons['x'].toSvg({ class: 'font-medium-1' }),
+            // cancelButtonAriaLabel: 'Thumbs down',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-outline-danger ml-1'
+            },
+            buttonsStyling: false
+        }).then(function(isConfirm) {
+            if(isConfirm.value == true) {
+                form.submit();
+            }
+        });
+    });
+</script>
 @endsection

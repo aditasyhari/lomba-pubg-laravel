@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/charts/apexcharts.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/extensions/ext-component-sweet-alerts.css') }}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -231,6 +232,9 @@
     <script src="{{ asset('app-assets/vendors/js/ui/jquery.sticky.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/charts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/ui/jquery.sticky.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/polyfill.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/moment.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
@@ -247,6 +251,7 @@
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('app-assets/js/scripts/pages/dashboard-analytics.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/pages/app-invoice-list.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
     <!-- END: Page JS-->
 
     @yield('js')

@@ -16,7 +16,8 @@ class Tournament extends Migration
         //
         Schema::create('tournament', function (Blueprint $table) {
             $table->id('id_tournament');
-            $table->string('nama');
+            $table->string('nama')->unique();
+            $table->string('slug')->unique();
             $table->text('lokasi');
             $table->boolean('online')->default(true);
             $table->integer('biaya_pendaftaran');

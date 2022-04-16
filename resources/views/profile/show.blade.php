@@ -335,7 +335,17 @@
 @section('js')
     @if($message = Session::get('success'))
     <script>
-        toastr.success('{{ $message }}', {timeOut: 3000})
+        Swal.fire({
+            // position: 'top-end',
+            icon: 'success',
+            title: '{{ $message }}',
+            showConfirmButton: false,
+            timer: 2000,
+            customClass: {
+            confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false
+        });
     </script>
     @endif
 

@@ -56,11 +56,19 @@ Route::middleware('auth')->group(function () {
     Route::put('profile/update-general', [ProfileController::class, 'updateGeneral']);
     Route::put('profile/update-foto', [ProfileController::class, 'updateFoto']);
     Route::put('profile/update-password', [ProfileController::class, 'updatePassword']);
+
+    Route::middleware('admin')->group(function() {
+        Route::get('news/add', [NewsController::class, 'add']);
+        Route::post('news/add', [NewsController::class, 'store']);
+        Route::get('news/edit/{slug}', [NewsController::class, 'edit']);
+        Route::put('news/edit/{slug}', [NewsController::class, 'update']);
+        Route::delete('news/detail/delete/{id}', [NewsController::class, 'delete']);
+    });
 });
 
 // news
 Route::get('news', [NewsController::class, 'index']);
-Route::get('news/detail', [NewsController::class, 'detail']);
+Route::get('news/detail/{slug}', [NewsController::class, 'detail']);
 
 // tournament
 Route::get('tournament', [TournamentController::class, 'index']);
