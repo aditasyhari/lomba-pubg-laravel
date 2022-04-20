@@ -30,31 +30,33 @@
                     </div>
                 </div>
             </div>
-            @if(Auth::user()->role == 'admin')
-            <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
-                <div class="form-group breadcrumb-right">
-                    <div class="dropdown">
-                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i data-feather="grid"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="{{ url('/news/edit/'.$data->slug) }}">
-                                <i class="mr-1" data-feather="edit-2"></i>
-                                <span class="align-middle">Edit</span>
-                            </a>
-                            <form id="form-delete" action="{{ url('/news/detail/delete/'.$data->id_berita) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <a class="dropdown-item" id="delete" href="#">
-                                    <i class="mr-1" data-feather="trash-2"></i>
-                                    <span class="align-middle">Hapus</span>
+            @auth
+                @if(Auth::user()->role == 'admin')
+                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrumb-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i data-feather="grid"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="{{ url('/news/edit/'.$data->slug) }}">
+                                    <i class="mr-1" data-feather="edit-2"></i>
+                                    <span class="align-middle">Edit</span>
                                 </a>
-                            </form>
+                                <form id="form-delete" action="{{ url('/news/detail/delete/'.$data->id_berita) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <a class="dropdown-item" id="delete" href="#">
+                                        <i class="mr-1" data-feather="trash-2"></i>
+                                        <span class="align-middle">Hapus</span>
+                                    </a>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @endif
+                @endif
+            @endauth
         </div>
         <div class="content-detached content-left">
             <div class="content-body">
