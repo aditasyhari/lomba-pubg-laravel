@@ -60,6 +60,9 @@ Route::middleware('auth')->group(function () {
     // tournament
     Route::get('tournament/add', [TournamentController::class, 'add']);
     Route::post('tournament/add', [TournamentController::class, 'store']);
+    Route::get('tournament/edit/{slug}', [TournamentController::class, 'edit']);
+    Route::put('tournament/edit/{slug}', [TournamentController::class, 'update']);
+    Route::delete('tournament/detail/delete/{id}', [TournamentController::class, 'delete']);
 
     Route::middleware('admin')->group(function() {
         // news

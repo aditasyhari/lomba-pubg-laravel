@@ -130,6 +130,13 @@ class NewsController extends Controller
     public function delete($id)
     {
         try {
+            $data = News::find($id);
+            $path = "images/berita/thumbnail/";
+
+            if (Storage::disk('public')->exists($path.$data->thumbnail)) {
+                Storage::disk('public')->delete($path.$data->thumbnail);
+            }
+
             News::destroy($id);
 
             return redirect('/news')->with('success', 'Berita berhasil dihapus.');

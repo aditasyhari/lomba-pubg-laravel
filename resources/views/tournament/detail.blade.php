@@ -30,7 +30,33 @@
                     </div>
                 </div>
             </div>
-
+            @auth
+                @if(Auth::user()->id_user == $data->id_penyelenggara)
+                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrumb-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i data-feather="grid"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="{{ url('/tournament/edit/'.$data->slug) }}">
+                                    <i class="mr-1" data-feather="edit-2"></i>
+                                    <span class="align-middle">Edit</span>
+                                </a>
+                                <form id="form-delete" action="{{ url('/tournament/detail/delete/'.$data->id_tournament) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <a class="dropdown-item" id="delete" href="#">
+                                        <i class="mr-1" data-feather="trash-2"></i>
+                                        <span class="align-middle">Hapus</span>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            @endauth
         </div>
         <div class="content-body">
             <!-- app e-commerce details start -->
@@ -41,30 +67,44 @@
                         <div class="row my-2">
                             <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
                                 <div class="d-flex align-items-center justify-content-center">
-                                    <img src="../../../app-assets/images/pages/eCommerce/1.png" class="img-fluid product-img" alt="product image" />
+                                    <img src="{{ url('storage/images/tournament/thumbnail/'.$data->thumbnail) }}" class="img-fluid product-img" alt="product image" />
                                 </div>
                             </div>
                             <div class="col-12 col-md-7">
-                                <h4>Apple Watch Series 5</h4>
-                                <span class="card-text item-company">By <a href="javascript:void(0)" class="company-name">Apple</a></span>
+                                <h4>{{ $data->nama }}</h4>
+                                <span class="card-text item-company">By <a href="javascript:void(0)" class="company-name">{{ $data->penyelenggara->nama }}</a></span>
                                 <div class="ecommerce-details-price d-flex flex-wrap mt-1">
-                                    <h4 class="item-price mr-1">Rp 150.000</h4>
+                                    <h4 class="item-price mr-1">Rp {{ number_format($data->biaya_pendaftaran, 0, '.', '.') }}</h4>
 
                                 </div>
-                                <p class="card-text">32 Slot - <span class="text-success">20 Tersedia</span></p>
+                                <p class="card-text">{{ $data->jumlah_slot }} Slot - <span class="text-success">{{ $data->sisa_slot }} Tersedia</span></p>
                                 <p class="card-text">
-                                    GPS, Always-On Retina display, 30% larger screen, Swimproof, ECG app, Electrical and optical heart sensors,
-                                    Built-in compass, Elevation, Emergency SOS, Fall Detection, S5 SiP with up to 2x faster 64-bit dual-core
-                                    processor, watchOS 6 with Activity trends, cycle tracking, hearing health innovations, and the App Store on
-                                    your wrist
+                                    <i data-feather="map-pin" class="mr-50"></i> {{ $data->lokasi }}
+                                </p>
+                                <p class="card-text">
+                                    {!! $data->deskripsi !!}
                                 </p>
 
                                 <hr />
+                                <p class="card-text">
+                                    <div>
+                                        <span class="text-warning">Terakhir Pendaftaran</span> : {{ tanggal_indonesia($data->tgl_valid) }}
+                                    </div>
+                                    <div>
+                                        <span class="text-info">Tanggal Tournament</span> : {{ tanggal_indonesia($data->tgl_tournament) }}
+                                    </div>
+                                </p>
                                 <div class="d-flex flex-column flex-sm-row pt-1">
                                     <a href="#" class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0">
-                                        <i data-feather="shopping-cart" class="mr-50"></i>
+                                        <i data-feather="corner-down-right" class="mr-50"></i>
                                         <span class="add-to-cart">Ikut Tournament</span>
                                     </a>
+                                    @if($data->file != null && $data != '')
+                                    <a href="{{ url('storage/images/tournament/file/'.$data->file) }}" target="_blank" class="btn btn-secondary mr-0 mr-sm-1 mb-1 mb-sm-0">
+                                        <i data-feather="download" class="mr-50"></i>
+                                        <span class="add-to-cart">Download Poster/File</span>
+                                    </a>
+                                    @endif
                                     <div class="btn-group dropdown-icon-wrapper btn-share">
                                         <button type="button" class="btn btn-icon hide-arrow btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i data-feather="share-2"></i>
@@ -75,9 +115,6 @@
                                             </a>
                                             <a href="javascript:void(0)" class="dropdown-item">
                                                 <i data-feather="twitter"></i>
-                                            </a>
-                                            <a href="javascript:void(0)" class="dropdown-item">
-                                                <i data-feather="youtube"></i>
                                             </a>
                                             <a href="javascript:void(0)" class="dropdown-item">
                                                 <i data-feather="instagram"></i>
@@ -96,22 +133,22 @@
                             <div class="col-12 col-md-4 mb-4 mb-md-0">
                                 <div class="w-75 mx-auto">
                                     <i data-feather="award"></i>
-                                    <h4 class="mt-2 mb-1">100% Original</h4>
-                                    <p class="card-text">Chocolate bar candy canes ice cream toffee. Croissant pie cookie halvah.</p>
+                                    <h4 class="mt-2 mb-1">100% Asli</h4>
+                                    <p class="card-text">Tournament yang diposting dijamin asli.</p>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 mb-4 mb-md-0">
                                 <div class="w-75 mx-auto">
                                     <i data-feather="clock"></i>
-                                    <h4 class="mt-2 mb-1">10 Day Replacement</h4>
-                                    <p class="card-text">Marshmallow biscuit donut dragée fruitcake. Jujubes wafer cupcake.</p>
+                                    <h4 class="mt-2 mb-1">Transaksi Mudah</h4>
+                                    <p class="card-text">Transaksi sangat mudah.</p>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 mb-4 mb-md-0">
                                 <div class="w-75 mx-auto">
                                     <i data-feather="shield"></i>
-                                    <h4 class="mt-2 mb-1">1 Year Warranty</h4>
-                                    <p class="card-text">Cotton candy gingerbread cake I love sugar plum I love sweet croissant.</p>
+                                    <h4 class="mt-2 mb-1">Garansi</h4>
+                                    <p class="card-text">Terdapat garansi jika terjadi kesalahan teknis atau penipuan.</p>
                                 </div>
                             </div>
                         </div>
@@ -130,4 +167,33 @@
 
 @section('js')
 <script src="{{ asset('app-assets/js/scripts/pages/app-ecommerce-details.js') }}"></script>
+
+<script>
+    $('#delete').on('click', function(e) {
+        e.preventDefault();
+        let form = $('#form-delete');
+        Swal.fire({
+            title: '<strong>Hapus Tournament?</strong>',
+            icon: 'info',
+            html:
+            'Jika dihapus, data tidak dapat dikembalikan!',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: 'Hapus',
+            // confirmButtonAriaLabel: 'Thumbs up, great!',
+            cancelButtonText: feather.icons['x'].toSvg({ class: 'font-medium-1' }),
+            // cancelButtonAriaLabel: 'Thumbs down',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-outline-danger ml-1'
+            },
+            buttonsStyling: false
+        }).then(function(isConfirm) {
+            if(isConfirm.value == true) {
+                form.submit();
+            }
+        });
+    });
+</script>
 @endsection

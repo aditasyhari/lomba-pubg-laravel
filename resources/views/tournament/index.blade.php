@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="content-detached">
+        <div class="content-detached mt-1">
             <div class="content-body">
                 <section id="ecommerce-header">
                     <div class="row">
@@ -78,7 +78,7 @@
                 <div class="body-content-overlay"></div>
                 <!-- background Overlay when sidebar is shown  ends-->
 
-                <section id="ecommerce-searchbar" class="ecommerce-searchbar">
+                <!-- <section id="ecommerce-searchbar" class="ecommerce-searchbar">
                     <div class="row mt-1">
                         <div class="col-sm-12">
                             <div class="input-group input-group-merge">
@@ -89,8 +89,9 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> -->
 
+                <hr>
                 <section id="ecommerce-products" class="grid-view">
 
                     @foreach($data as $d)
@@ -156,4 +157,20 @@
 
 @section('js')
 <script src="{{ asset('app-assets/js/scripts/pages/app-ecommerce.js') }}"></script>
+
+@if($message = Session::get('success'))
+    <script>
+        Swal.fire({
+            // position: 'top-end',
+            icon: 'success',
+            title: '{{ $message }}',
+            showConfirmButton: false,
+            timer: 2200,
+            customClass: {
+            confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false
+        });
+    </script>
+@endif
 @endsection

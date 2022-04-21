@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tournament;
 use Exception;
 use Validator;
+use Storage;
 use Auth;
 use Str;
 
@@ -23,9 +24,15 @@ class TournamentController extends Controller
         }
     }
 
-    public function detail()
+    public function detail($slug)
     {
-        return view('tournament.detail');
+        try {
+            $data = Tournament::with('penyelenggara')->where('slug', $slug)->first();
+
+            return view('tournament.detail', compact(['data']));
+        } catch (Exception $e) {
+            return view('error');
+        }
     }
 
     public function add()
@@ -51,7 +58,7 @@ class TournamentController extends Controller
                 'tgl_tournament' => 'required',
                 'deskripsi' => 'required',
                 'thumbnail' => 'required',
-                'file' => 'required',
+                'file_poster' => 'required',
             ]);
 
             if($validator->fails()) {
@@ -61,8 +68,7 @@ class TournamentController extends Controller
             $pathThumbnail = "images/tournament/thumbnail/";
             $pathFile = "images/tournament/file/";
             $thumbnail = uploads($request->thumbnail, $pathThumbnail);
-            $file = uploads($request->file, $pathFile);
-
+            $file = uploads($request->file_poster, $pathFile);
 
             $input = [
                 'nama' => $request->nama,
@@ -75,7 +81,7 @@ class TournamentController extends Controller
                 'tgl_tournament' => $request->tgl_tournament,
                 'deskripsi' => $request->deskripsi,
                 'thumbnail' => $thumbnail,
-                'file' => $thumbnail,
+                'file' => $file,
                 'id_penyelenggara' => Auth::user()->id_user
             ];
 
@@ -84,6 +90,78 @@ class TournamentController extends Controller
             return back()->with('success', 'Tournament berhasil diposting !');
         } catch (Exception $e) {
             dd($e->getMessage());
+            return view('error');
+        }
+    }
+
+    public function edit($slug)
+    {
+        try {
+            $data = Tournament::with('penyelenggara')->where('slug', $slug)->first();
+
+            return view('tournament.edit', compact(['data']));
+        } catch (Exception $e) {
+            return view('error');
+        }
+    }
+
+    public function update(Request $request, $slug)
+    {
+        try {
+            $update = $request->except(['thumbnail', 'file_poster', '_token', '_method']);
+
+            if($request->thumbnail) {
+                $data = Tournament::select('thumbnail')->where('slug', $slug)->first();
+                $pathThumbnail = "images/tournament/thumbnail/";
+
+                if (Storage::disk('public')->exists($pathThumbnail.$data->thumbnail)) {
+                    Storage::disk('public')->delete($pathThumbnail.$data->thumbnail);
+                }
+
+                $thumbnail = uploads($request->thumbnail, $pathThumbnail);
+                $update['thumbnail'] = $thumbnail;
+            }
+
+            if($request->file_poster) {
+                $data = Tournament::select('file')->where('slug', $slug)->first();
+                $pathFile = "images/tournament/file/";
+
+                if (Storage::disk('public')->exists($pathFile.$data->file)) {
+                    Storage::disk('public')->delete($pathFile.$data->file);
+                }
+
+                $file = uploads($request->file_poster, $pathFile);
+                $update['file'] = $file;
+            }
+
+            Tournament::where('slug', $slug)->update($update);
+
+            return redirect('/tournament')->with('success', 'Tournament berhasil diperbarui !');
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return view('error');
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $data = Tournament::find($id);
+            $pathThumbnail = "images/tournament/thumbnail/";
+            $pathFile = "images/tournament/file/";
+
+            if(Storage::disk('public')->exists($pathThumbnail.$data->thumbnail)) {
+                Storage::disk('public')->delete($pathThumbnail.$data->thumbnail);
+            }
+
+            if(Storage::disk('public')->exists($pathFile.$data->file)) {
+                Storage::disk('public')->delete($pathFile.$data->file);
+            }
+
+            Tournament::destroy($id);
+
+            return redirect('/tournament')->with('success', 'Tournament berhasil dihapus.');
+        } catch (Exception $e) {
             return view('error');
         }
     }
