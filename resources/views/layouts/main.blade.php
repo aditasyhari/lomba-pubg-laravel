@@ -7,13 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="author" content="PUBG">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('logo.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/charts/apexcharts.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/charts/apexcharts.css') }}"> -->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/extensions/ext-component-sweet-alerts.css') }}">
     <!-- END: Vendor CSS-->
@@ -30,7 +34,7 @@
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/horizontal-menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/dashboard-ecommerce.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/charts/chart-apex.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/charts/chart-apex.css') }}"> -->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/extensions/ext-component-toastr.css') }}">
     <!-- END: Page CSS-->
 
@@ -181,25 +185,39 @@
             <div class="navbar-container main-menu-content" data-menu="menu-container">
                 <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
                     <li class="dropdown nav-item {{ (request()->is('/')) ? 'active' : '' }}">
-                        <a class="nav-link d-flex align-items-center" href="{{ url('/') }}"><i data-feather="home"></i>
+                        <a class="nav-link d-flex align-items-center" href="{{ url('/') }}">
+                            <i data-feather="home"></i>
                             <span>Home</span>
                         </a>
                     </li>
                     <li class="dropdown nav-item {{ (request()->is('news*')) ? 'active' : '' }}">
-                        <a class="nav-link d-flex align-items-center" href="{{ url('/news') }}"><i data-feather="file-text"></i>
+                        <a class="nav-link d-flex align-items-center" href="{{ url('/news') }}">
+                            <i data-feather="file-text"></i>
                             <span>Berita</span>
                         </a>
                     </li>
                     <li class="dropdown nav-item {{ (request()->is('tournament*')) ? 'active' : '' }}">
-                        <a class="nav-link d-flex align-items-center" href="{{ url('/tournament') }}"><i data-feather="info"></i>
+                        <a class="nav-link d-flex align-items-center" href="{{ url('/tournament') }}">
+                            <i data-feather="info"></i>
                             <span>Tournament</span>
                         </a>
                     </li>
                     <li class="dropdown nav-item {{ (request()->is('pemenang*')) ? 'active' : '' }}">
-                        <a class="nav-link d-flex align-items-center" href="{{ url('/pemenang') }}"><i data-feather="gift"></i>
+                        <a class="nav-link d-flex align-items-center" href="{{ url('/pemenang') }}">
+                            <i data-feather="gift"></i>
                             <span>Pemenang</span>
                         </a>
                     </li>
+                    @auth
+                        @if(Auth::user()->role == 'admin')
+                        <li class="dropdown nav-item {{ (request()->is('user*')) ? 'active' : '' }}">
+                            <a class="nav-link d-flex align-items-center" href="{{ url('/user') }}">
+                                <i data-feather="user"></i>
+                                <span>User</span>
+                            </a>
+                        </li>
+                        @endif
+                    @endauth
                 </ul>
             </div>
         </div>
@@ -230,7 +248,7 @@
 
     <!-- BEGIN: Page Vendor JS-->
     <script src="{{ asset('app-assets/vendors/js/ui/jquery.sticky.js') }}"></script>
-    <script src="{{ asset('app-assets/vendors/js/charts/apexcharts.min.js') }}"></script>
+    <!-- <script src="{{ asset('app-assets/vendors/js/charts/apexcharts.min.js') }}"></script> -->
     <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/ui/jquery.sticky.js') }}"></script>
@@ -249,7 +267,7 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="{{ asset('app-assets/js/scripts/pages/dashboard-analytics.js') }}"></script>
+    <!-- <script src="{{ asset('app-assets/js/scripts/pages/dashboard-analytics.js') }}"></script> -->
     <script src="{{ asset('app-assets/js/scripts/pages/app-invoice-list.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
     <!-- END: Page JS-->

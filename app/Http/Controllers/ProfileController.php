@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Validator;
 use Exception;
-use Auth;
 use Storage;
+use Auth;
 
 class ProfileController extends Controller
 {

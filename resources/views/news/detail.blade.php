@@ -158,53 +158,9 @@
                         <!--/ Blog -->
 
                         <!-- Blog Comment -->
-                        <div class="col-12 mt-1" id="blogComment">
-                            <h6 class="section-label mt-25">Komentar</h6>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="media">
-                                        <div class="avatar mr-75">
-                                            <img src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" width="38" height="38" alt="Avatar" />
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="font-weight-bolder mb-25">Chad Alexander</h6>
-                                            <p class="card-text">May 24, 2020</p>
-                                            <p class="card-text">
-                                                A variation on the question technique above, the multiple-choice question great way to engage your
-                                                reader.
-                                            </p>
-                                            <!-- <a href="javascript:void(0);">
-                                                <div class="d-inline-flex align-items-center">
-                                                    <i data-feather="corner-up-left" class="font-medium-3 mr-50"></i>
-                                                    <span>Reply</span>
-                                                </div>
-                                            </a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @livewire('comments', ['id_berita' => $data->id_berita])
                         <!--/ Blog Comment -->
 
-                        <!-- Leave a Blog Comment -->
-                        <div class="col-12 mt-1">
-                            <h6 class="section-label mt-25">Tinggalkan Komentar</h6>
-                            <div class="card">
-                                <div class="card-body">
-                                    <form action="javascript:void(0);" class="form">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <textarea class="form-control mb-2" rows="4" placeholder="Comment"></textarea>
-                                            </div>
-                                            <div class="col-12">
-                                                <button type="submit" class="btn btn-primary">Komentar</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ Leave a Blog Comment -->
                     </div>
                 </div>
                 <!--/ Blog Detail -->
@@ -258,6 +214,7 @@
 @endsection
 
 @section('js')
+@livewireScripts
 <script>
     $('#delete').on('click', function(e) {
         e.preventDefault();

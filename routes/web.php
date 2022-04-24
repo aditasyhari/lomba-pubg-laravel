@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GlobalController;
@@ -71,6 +72,12 @@ Route::middleware('auth')->group(function () {
         Route::get('news/edit/{slug}', [NewsController::class, 'edit']);
         Route::put('news/edit/{slug}', [NewsController::class, 'update']);
         Route::delete('news/detail/delete/{id}', [NewsController::class, 'delete']);
+
+        // user
+        Route::get('user', [UserController::class, 'index']);
+        Route::get('user/list', [UserController::class, 'list']);
+        Route::get('user/detail/{id}', [UserController::class, 'show']);
+        Route::delete('user/delete/{id}', [UserController::class, 'delete']);
     });
 });
 
