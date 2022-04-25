@@ -169,7 +169,7 @@
 
                     <!-- Recent Posts -->
                     <div class="blog-recent-posts mt-3">
-                        <h6 class="section-label">Berita Terakhir</h6>
+                        <h6 class="section-label">Info Terakhir</h6>
                         @foreach($new as $n)
                         <div class="mt-75">
                             <div class="media mb-2">
