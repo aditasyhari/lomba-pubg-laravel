@@ -33,8 +33,6 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/', [GlobalController::class, 'home']);
 
-// profile
-
 Route::middleware('auth')->group(function () {
 
     Route::get('/email/verify', function () {
@@ -73,6 +71,13 @@ Route::middleware('auth')->group(function () {
         Route::put('news/edit/{slug}', [NewsController::class, 'update']);
         Route::delete('news/detail/delete/{id}', [NewsController::class, 'delete']);
 
+         // pemenang
+         Route::get('pemenang/add', [WinnerController::class, 'add']);
+         Route::post('pemenang/add', [WinnerController::class, 'store']);
+         Route::get('pemenang/edit/{slug}', [WinnerController::class, 'edit']);
+         Route::put('pemenang/edit/{slug}', [WinnerController::class, 'update']);
+         Route::delete('pemenang/detail/delete/{id}', [WinnerController::class, 'delete']);
+
         // user
         Route::get('user', [UserController::class, 'index']);
         Route::get('user/list', [UserController::class, 'list']);
@@ -91,8 +96,4 @@ Route::get('tournament/detail/{slug}', [TournamentController::class, 'detail']);
 
 // winner
 Route::get('pemenang', [WinnerController::class, 'index']);
-
-
-// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('dashboard');
+Route::get('pemenang/detail/{slug}', [WinnerController::class, 'detail']);

@@ -122,7 +122,6 @@ class NewsController extends Controller
 
             return redirect('/news')->with('success', 'Berita berhasil diperbarui !');
         } catch (Exception $e) {
-            dd($e->getMessage());
             return view('error');
         }
     }
