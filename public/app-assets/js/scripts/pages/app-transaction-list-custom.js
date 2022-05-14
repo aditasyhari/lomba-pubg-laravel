@@ -1,40 +1,49 @@
 $(function () {
   'use strict';
 
-  var dtUserTable = $('.user-list-table');
+  var dtTransactionTable = $('.transaction-list-table');
 
-  // Users List datatable
-  if (dtUserTable.length) {
-    dtUserTable.DataTable({
+  if (dtTransactionTable.length) {
+    $.fn.dataTable.ext.errMode = 'throw';
+    // $.ajaxSetup({
+    //   headers: {
+    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //   }
+    // });
+
+    dtTransactionTable.DataTable({
       processing: true,
       serverSide: true,
       ajax: {
         type: 'GET',
-        url: "user/list",
+        url: "transaksi/list",
       }, // JSON file to add data
       columns: [
-        // { data: 'id_user' },
-        { data: 'nama' },
-        { data: 'email' },
-        { data: 'role' },
+        { data: 'team' },
+        { data: 'logo' },
+        { data: 'tournament' },
+        { data: 'status' },
+        { data: 'peserta' },
+        { data: 'penyelenggara' },
+        { data: 'bukti' },
         { data: '' }
       ],
       columnDefs: [
         {
-          targets: 0,
-          responsivePriority: 4,
+          targets: 1,
+          // responsivePriority: 4,
           render: function (data, type, full, meta) {
-            var $name = full['nama'],
-              $image = full['foto'];
+            var $name = full['team'],
+              $image = full['logo'];
             if ($image) {
               var base_url = window.location.origin;
               var $output =
-                '<img src="' + base_url + "/storage/images/profile/" + $image + '" alt="Avatar" height="32" width="32">';
+                '<img src="' + base_url + "/storage/images/transaksi/logo/" + $image + '" alt="Avatar" height="32" width="32">';
             } else {
               var stateNum = Math.floor(Math.random() * 6) + 1;
               var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
               var $state = states[stateNum],
-                $name = full['nama'],
+                $name = full['team'],
                 $initials = $name.match(/\b\w/g) || [];
               $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
               $output = '<span class="avatar-content">' + $initials + '</span>';
@@ -59,23 +68,41 @@ $(function () {
           }
         },
         {
-          targets: 2,
+          targets: 3,
           render: function (data, type, full, meta) {
-            var $role = full['role'];
+            var $status = full['status'];
             var icon;
-            switch($role) {
-              case 'admin':
-                icon = feather.icons['slack'].toSvg({ class: 'font-medium-3 text-danger mr-50' });
+            switch($status) {
+              case 'waiting':
+                icon = feather.icons['clock'].toSvg({ class: 'font-medium-3 text-secondary mr-50' });
                 break;
-              case 'penyelenggara':
-                icon = feather.icons['edit-2'].toSvg({ class: 'font-medium-3 text-info mr-50' });
+              case 'reject':
+                icon = feather.icons['x-circle'].toSvg({ class: 'font-medium-3 text-danger mr-50' });
+                break;
+              case 'valid':
+                icon = feather.icons['check-circle'].toSvg({ class: 'font-medium-3 text-success mr-50' });
                 break;
               default:
-                icon = feather.icons['user'].toSvg({ class: 'font-medium-3 text-primary mr-50' });
+                icon = feather.icons['clock'].toSvg({ class: 'font-medium-3 text-secondary mr-50' });
                 break;
             }
 
-            return "<span class='text-truncate align-middle text-capitalize'>" + icon + $role + '</span>';
+            return "<span class='text-truncate align-middle text-capitalize'>" + icon + $status + '</span>';
+          }
+        },
+        {
+          targets: 6,
+          render: function (data, type, full, meta) {
+            var $bukti = full['bukti'];
+
+            if($bukti) {
+              var base_url = window.location.origin;
+              var $output = '<a href="' + base_url + "/storage/images/transaksi/bukti/" + $bukti + '" target="_blank" rel="noopener noreferrer">Lihat</a>';
+            } else {
+              var $output = "Tidak Ada";
+            }
+
+            return $output;
           }
         },
         {
@@ -83,20 +110,17 @@ $(function () {
           title: 'Actions',
           orderable: false,
           render: function (data, type, full, meta) {
-            var id_user = full['id_user'];
+            var id_transaksi = full['id_transaksi'];
             return (
               '<div class="btn-group">' +
                 '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
                 feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
                 '</a>' +
                 '<div class="dropdown-menu dropdown-menu-right">' +
-                '<a href="user/detail/'+ id_user +
+                '<a href="transaksi/detail/'+ id_transaksi +
                 '" class="dropdown-item">' +
                 feather.icons['file-text'].toSvg({ class: 'font-small-4 mr-50' }) +
                 'Detail</a>' +
-                '<a href="javascript:;" class="dropdown-item delete-record" onclick="hapus('+ id_user +')">' +
-                feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' }) +
-                'Delete</a>' +
                 '</div>' +
               '</div>'
             );
@@ -119,17 +143,17 @@ $(function () {
       },
       // Buttons with Dropdown
       buttons: [
-        {
-          text: 'Tambah User',
-          className: 'add-new btn btn-primary mt-50',
-          attr: {
-            'data-toggle': 'modal',
-            'data-target': '#modals-slide-in'
-          },
-          init: function (api, node, config) {
-            $(node).removeClass('btn-secondary');
-          }
-        }
+        // {
+        //   text: 'Tambah User',
+        //   className: 'add-new btn btn-primary mt-50',
+        //   attr: {
+        //     'data-toggle': 'modal',
+        //     'data-target': '#modals-slide-in'
+        //   },
+        //   init: function (api, node, config) {
+        //     $(node).removeClass('btn-secondary');
+        //   }
+        // }
       ],
       language: {
         paginate: {

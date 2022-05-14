@@ -54,24 +54,29 @@
                             <!-- Blog List Items -->
                             <div class="row px-150">
                                 <div class="col-12 text-center mt-5 mb-3">
-                                    <h2>Informasi Turnamen Terbaru</h2>
+                                    <h2>Informasi Tournament Terbaru</h2>
                                 </div>
                                 
+                                @foreach($data as $d)
                                 <div class="col-md-6 col-12">
                                     <div class="card">
                                         <div class="card-body">
                                             <h4 class="card-title">
-                                                <a href="#" class="blog-title-truncate text-body-heading">PUBG Mobile - Limited Hustle x Keras Organizer League</a>
+                                                <a href="#" class="blog-title-truncate text-body-heading">{{ $d->nama }}</a>
                                             </h4>
                                             <div class="media">
                                                 <div class="avatar mr-50">
-                                                    <img src="../../../app-assets/images/portrait/small/avatar-s-7.jpg" alt="Avatar" width="24" height="24" />
+                                                    @if($d->penyelenggara->foto == '' || $d->penyelenggara->foto == null)
+                                                        <img src="{{ asset('images/default.jpg') }}" alt="Avatar" width="24" height="24" />
+                                                    @else
+                                                        <img src="{{ url('storage/images/profile/'.$d->penyelenggara->foto) }}" alt="Avatar" width="24" height="24" />
+                                                    @endif
                                                 </div>
                                                 <div class="media-body">
                                                     <small class="text-muted mr-25">by</small>
-                                                    <small><a href="javascript:void(0);" class="text-body">Ghani Pradita</a></small>
+                                                    <small><a href="javascript:void(0);" class="text-body">{{ $d->penyelenggara->nama }}</a></small>
                                                     <span class="text-muted ml-50 mr-25">|</span>
-                                                    <small class="text-muted">12 February 2022</small>
+                                                    <small class="text-muted">{{ tanggal_indonesia($d->tgl_valid) }}</small>
                                                 </div>
                                             </div>
                                             <div class="my-1 py-25">
@@ -83,231 +88,22 @@
                                                 </a>
                                             </div>
                                             <p class="card-text blog-content-truncate">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                                {{ strip_tags($d->deskripsi) }}
                                             </p>
                                             <hr />
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <a href="#">
                                                     <div class="d-flex align-items-center">
                                                         <i data-feather="info" class="font-medium-1 text-body mr-50"></i>
-                                                        <span class="text-body font-weight-bold">Tersedia 10 / 16 Slot</span>
+                                                        <span class="text-body font-weight-bold">Tersedia {{ $d->sisa_slot }} / {{ $d->jumlah_slot }} Slot</span>
                                                     </div>
                                                 </a>
-                                                <a href="#" class="font-weight-bold">Detail</a>
+                                                <a href="{{ url('tournament/detail/'.$d->slug) }}" class="font-weight-bold">Detail</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">
-                                                <a href="#" class="blog-title-truncate text-body-heading">Fast Tournament BY Imaginive (Khusus Ladies)</a>
-                                            </h4>
-                                            <div class="media">
-                                                <div class="avatar mr-50">
-                                                    <img src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="Avatar" width="24" height="24" />
-                                                </div>
-                                                <div class="media-body">
-                                                    <small class="text-muted mr-25">by</small>
-                                                    <small><a href="javascript:void(0);" class="text-body">Jorge Griffin</a></small>
-                                                    <span class="text-muted ml-50 mr-25">|</span>
-                                                    <small class="text-muted">11 February, 2022</small>
-                                                </div>
-                                            </div>
-                                            <div class="my-1 py-25">
-                                                <a href="javascript:void(0);">
-                                                    <div class="badge badge-pill badge-light-danger mr-50">Gaming</div>
-                                                </a>
-                                                <a href="javascript:void(0);">
-                                                    <div class="badge badge-pill badge-light-warning">Pubg</div>
-                                                </a>
-                                            </div>
-                                            <p class="card-text blog-content-truncate">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            </p>
-                                            <hr />
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <a href="#">
-                                                    <div class="d-flex align-items-center">
-                                                        <i data-feather="info" class="font-medium-1 text-body mr-50"></i>
-                                                        <span class="text-body font-weight-bold">Tersedia 20 / 32 Slot</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#" class="font-weight-bold">Detail</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">
-                                                <a href="#" class="blog-title-truncate text-body-heading">Fast Tournament BY Imaginive (Khusus Ladies)</a>
-                                            </h4>
-                                            <div class="media">
-                                                <div class="avatar mr-50">
-                                                    <img src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="Avatar" width="24" height="24" />
-                                                </div>
-                                                <div class="media-body">
-                                                    <small class="text-muted mr-25">by</small>
-                                                    <small><a href="javascript:void(0);" class="text-body">Jorge Griffin</a></small>
-                                                    <span class="text-muted ml-50 mr-25">|</span>
-                                                    <small class="text-muted">11 February, 2022</small>
-                                                </div>
-                                            </div>
-                                            <div class="my-1 py-25">
-                                                <a href="javascript:void(0);">
-                                                    <div class="badge badge-pill badge-light-danger mr-50">Gaming</div>
-                                                </a>
-                                                <a href="javascript:void(0);">
-                                                    <div class="badge badge-pill badge-light-warning">Pubg</div>
-                                                </a>
-                                            </div>
-                                            <p class="card-text blog-content-truncate">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            </p>
-                                            <hr />
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <a href="#">
-                                                    <div class="d-flex align-items-center">
-                                                        <i data-feather="info" class="font-medium-1 text-body mr-50"></i>
-                                                        <span class="text-body font-weight-bold">Tersedia 20 / 32 Slot</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#" class="font-weight-bold">Detail</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">
-                                                <a href="#" class="blog-title-truncate text-body-heading">PUBG Mobile - Limited Hustle x Keras Organizer League</a>
-                                            </h4>
-                                            <div class="media">
-                                                <div class="avatar mr-50">
-                                                    <img src="../../../app-assets/images/portrait/small/avatar-s-7.jpg" alt="Avatar" width="24" height="24" />
-                                                </div>
-                                                <div class="media-body">
-                                                    <small class="text-muted mr-25">by</small>
-                                                    <small><a href="javascript:void(0);" class="text-body">Ghani Pradita</a></small>
-                                                    <span class="text-muted ml-50 mr-25">|</span>
-                                                    <small class="text-muted">12 February 2022</small>
-                                                </div>
-                                            </div>
-                                            <div class="my-1 py-25">
-                                                <a href="javascript:void(0);">
-                                                    <div class="badge badge-pill badge-light-danger mr-50">Gaming</div>
-                                                </a>
-                                                <a href="javascript:void(0);">
-                                                    <div class="badge badge-pill badge-light-warning">Pubg</div>
-                                                </a>
-                                            </div>
-                                            <p class="card-text blog-content-truncate">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            </p>
-                                            <hr />
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <a href="#">
-                                                    <div class="d-flex align-items-center">
-                                                        <i data-feather="info" class="font-medium-1 text-body mr-50"></i>
-                                                        <span class="text-body font-weight-bold">Tersedia 10 / 16 Slot</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#" class="font-weight-bold">Detail</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">
-                                                <a href="#" class="blog-title-truncate text-body-heading">PUBG Mobile - Limited Hustle x Keras Organizer League</a>
-                                            </h4>
-                                            <div class="media">
-                                                <div class="avatar mr-50">
-                                                    <img src="../../../app-assets/images/portrait/small/avatar-s-7.jpg" alt="Avatar" width="24" height="24" />
-                                                </div>
-                                                <div class="media-body">
-                                                    <small class="text-muted mr-25">by</small>
-                                                    <small><a href="javascript:void(0);" class="text-body">Ghani Pradita</a></small>
-                                                    <span class="text-muted ml-50 mr-25">|</span>
-                                                    <small class="text-muted">12 February 2022</small>
-                                                </div>
-                                            </div>
-                                            <div class="my-1 py-25">
-                                                <a href="javascript:void(0);">
-                                                    <div class="badge badge-pill badge-light-danger mr-50">Gaming</div>
-                                                </a>
-                                                <a href="javascript:void(0);">
-                                                    <div class="badge badge-pill badge-light-warning">Pubg</div>
-                                                </a>
-                                            </div>
-                                            <p class="card-text blog-content-truncate">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            </p>
-                                            <hr />
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <a href="#">
-                                                    <div class="d-flex align-items-center">
-                                                        <i data-feather="info" class="font-medium-1 text-body mr-50"></i>
-                                                        <span class="text-body font-weight-bold">Tersedia 10 / 16 Slot</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#" class="font-weight-bold">Detail</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">
-                                                <a href="#" class="blog-title-truncate text-body-heading">Fast Tournament BY Imaginive (Khusus Ladies)</a>
-                                            </h4>
-                                            <div class="media">
-                                                <div class="avatar mr-50">
-                                                    <img src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="Avatar" width="24" height="24" />
-                                                </div>
-                                                <div class="media-body">
-                                                    <small class="text-muted mr-25">by</small>
-                                                    <small><a href="javascript:void(0);" class="text-body">Jorge Griffin</a></small>
-                                                    <span class="text-muted ml-50 mr-25">|</span>
-                                                    <small class="text-muted">11 February, 2022</small>
-                                                </div>
-                                            </div>
-                                            <div class="my-1 py-25">
-                                                <a href="javascript:void(0);">
-                                                    <div class="badge badge-pill badge-light-danger mr-50">Gaming</div>
-                                                </a>
-                                                <a href="javascript:void(0);">
-                                                    <div class="badge badge-pill badge-light-warning">Pubg</div>
-                                                </a>
-                                            </div>
-                                            <p class="card-text blog-content-truncate">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            </p>
-                                            <hr />
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <a href="#">
-                                                    <div class="d-flex align-items-center">
-                                                        <i data-feather="info" class="font-medium-1 text-body mr-50"></i>
-                                                        <span class="text-body font-weight-bold">Tersedia 20 / 32 Slot</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#" class="font-weight-bold">Detail</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
 
                             </div>
                             <!--/ Blog List Items -->

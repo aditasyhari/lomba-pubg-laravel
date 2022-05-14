@@ -53,20 +53,6 @@
                                     <span class="font-weight-bold">Ganti Password</span>
                                 </a>
                             </li>
-                            <!-- information -->
-                            <li class="nav-item">
-                                <a class="nav-link" id="account-pill-info" data-toggle="pill" href="#account-vertical-info" aria-expanded="false">
-                                    <i data-feather="info" class="font-medium-3 mr-1"></i>
-                                    <span class="font-weight-bold">Informasi</span>
-                                </a>
-                            </li>
-                            <!-- notification -->
-                            <li class="nav-item">
-                                <a class="nav-link" id="account-pill-notifications" data-toggle="pill" href="#account-vertical-notifications" aria-expanded="false">
-                                    <i data-feather="bell" class="font-medium-3 mr-1"></i>
-                                    <span class="font-weight-bold">Pengaturan</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                     <!--/ left menu section -->
@@ -136,8 +122,17 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Role</label>
-                                                        <input type="text" class="form-control text-uppercase" value="{{ $user->role }}" readonly/>
+                                                        <label>Ganti Role</label>
+                                                        <select name="role" id="" class="form-control">
+                                                            <option {{ ($user->role == 'peserta'? 'selected' : '') }} value="peserta">Peserta</option>
+                                                            <option {{ ($user->role == 'penyelenggara'? 'selected' : '') }} value="penyelenggara">Penyelenggara</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="accountTextarea">Alamat</label>
+                                                        <textarea class="form-control" id="accountTextarea" rows="4" placeholder="Alamat..." name="alamat" required>{{ $user->alamat }}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 mt-75">

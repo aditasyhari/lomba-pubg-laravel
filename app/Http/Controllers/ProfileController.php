@@ -32,6 +32,8 @@ class ProfileController extends Controller
                 'nama' => 'required',
                 'email' => 'required',
                 'no_hp' => 'required|numeric',
+                'alamat' => 'required',
+                'role' => 'nullable'
             ]);
 
             if ($validator->fails()) {

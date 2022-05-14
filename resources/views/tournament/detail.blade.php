@@ -95,10 +95,32 @@
                                     </div>
                                 </p>
                                 <div class="d-flex flex-column flex-sm-row pt-1">
-                                    <a href="#" class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0">
-                                        <i data-feather="corner-down-right" class="mr-50"></i>
-                                        <span class="add-to-cart">Ikut Tournament</span>
-                                    </a>
+                                    @switch($status)
+                                        @case(0)
+                                            <a href="{{ url('login') }}" class="btn btn-warning mr-0 mr-sm-1 mb-1 mb-sm-0" disabled>
+                                                <i data-feather="corner-down-right" class="mr-50"></i>
+                                                <span class="add-to-cart">Silahkan Login</span>
+                                            </a>
+                                            @break
+                                        @case(1)
+                                            <div class="btn btn-info mr-0 mr-sm-1 mb-1 mb-sm-0">
+                                                <i data-feather="corner-down-right" class="mr-50"></i>
+                                                <span class="add-to-cart">Sudah Daftar</span>
+                                            </div>
+                                            @break
+                                        @case(2)
+                                            <button type="button" class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0" data-toggle="modal" data-target="#formDaftar">
+                                                <i data-feather="corner-down-right" class="mr-50"></i>
+                                                <span class="add-to-cart">Daftar</span>
+                                            </button>
+                                            @break
+                                        @case(3)
+                                            <button type="button" class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0" data-toggle="modal" data-target="#modalverifikasi">
+                                                <i data-feather="corner-down-right" class="mr-50"></i>
+                                                <span class="add-to-cart">Daftar</span>
+                                            </button>
+                                            @break
+                                    @endswitch
                                     @if($data->file != null && $data != '')
                                     <a href="{{ url('storage/images/tournament/file/'.$data->file) }}" target="_blank" class="btn btn-secondary mr-0 mr-sm-1 mb-1 mb-sm-0">
                                         <i data-feather="download" class="mr-50"></i>
@@ -162,11 +184,89 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="formDaftar" tabindex="-1" role="dialog" aria-labelledby="formDaftarTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formDaftarTitle">Daftar Tournament</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="form-group">
+                                <label for="basicInputFile">Nama Team</label>
+                                <input type="text" class="form-control" id="basicInput" name="team" placeholder="Masukkan Nama Team" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="form-group">
+                                <label for="customFile">Logo Team</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="logo" required/>
+                                    <label class="custom-file-label" for="customFile">Pilih file</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" value="{{ $data->penyelenggara->nama }}" name="penyelenggara">
+                </div>
+             <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Daftar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalverifikasi" tabindex="-1" role="dialog" aria-labelledby="modalverifikasiTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalverifikasiTitle">Verifikasi email anda!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Verifikasi email anda terlebih dahulu !
+             <div class="modal-footer">
+                    <a href="{{ url('email/verify') }}" class="btn btn-primary">Verifikasi</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- END: Content-->
 @endsection
 
 @section('js')
 <script src="{{ asset('app-assets/js/scripts/pages/app-ecommerce-details.js') }}"></script>
+
+@if($message = Session::get('success'))
+<script>
+    Swal.fire({
+        // position: 'top-end',
+        icon: 'success',
+        title: '{{ $message }}',
+        showConfirmButton: false,
+        timer: 2200,
+        customClass: {
+          confirmButton: 'btn btn-primary'
+        },
+        buttonsStyling: false
+    });
+</script>
+@endif
 
 <script>
     $('#delete').on('click', function(e) {

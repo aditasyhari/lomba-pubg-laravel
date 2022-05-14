@@ -12,6 +12,7 @@ use App\Http\Controllers\WinnerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -63,6 +64,16 @@ Route::middleware('auth')->group(function () {
     Route::put('tournament/edit/{slug}', [TournamentController::class, 'update']);
     Route::delete('tournament/detail/delete/{id}', [TournamentController::class, 'delete']);
 
+    // daftar tournament
+    Route::post('tournament/detail/{slug}', [TournamentController::class, 'daftar']);
+
+    Route::get('transaksi', [TransactionController::class, 'index']);
+    Route::get('transaksi/list', [TransactionController::class, 'list'])->name('transaksi.list');
+    Route::get('transaksi/detail/{id}', [TransactionController::class, 'detail']);
+    Route::put('transaksi/detail/{id}/upload-bukti', [TransactionController::class, 'uploadBukti']);
+    Route::put('transaksi/detail/{id}/reject', [TransactionController::class, 'reject']);
+    Route::put('transaksi/detail/{id}/valid', [TransactionController::class, 'valid']);
+    
     Route::middleware('admin')->group(function() {
         // news
         Route::get('news/add', [NewsController::class, 'add']);
@@ -88,6 +99,7 @@ Route::middleware('auth')->group(function () {
 
 // news
 Route::get('news', [NewsController::class, 'index']);
+Route::get('news/search', [NewsController::class, 'search']);
 Route::get('news/detail/{slug}', [NewsController::class, 'detail']);
 
 // tournament

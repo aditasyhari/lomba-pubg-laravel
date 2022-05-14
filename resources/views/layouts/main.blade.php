@@ -42,6 +42,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <!-- END: Custom CSS-->
 
+    @livewireStyles
+
     @yield('css')
 
 </head>
@@ -70,10 +72,14 @@
                 <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon" data-feather="sun"></i></a></li>
                 <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon" data-feather="search"></i></a>
                     <div class="search-input">
-                        <div class="search-input-icon"><i data-feather="search"></i></div>
-                        <input class="form-control input" type="text" placeholder="Cari Tournament.." tabindex="-1" data-search="search">
+                        <!-- <div class="search-input-icon"><i data-feather="search"></i></div> -->
+                        <!-- <input class="form-control input" wire:model="search" type="text" placeholder="Cari Tournament.." tabindex="-1" data-search="search">
+                        <div class="search-input-close"><i data-feather="x"></i></div> -->
                         <div class="search-input-close"><i data-feather="x"></i></div>
-                        <ul class="search-list search-list-main"></ul>
+
+                        <!-- <ul class="search-list search-list-main"></ul> -->
+                        
+                        @livewire('search-tournament')
                     </div>
                 </li>
                 <!-- <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);" data-toggle="dropdown"><i class="ficon" data-feather="bell"></i><span class="badge badge-pill badge-danger badge-up">5</span></a>
@@ -209,6 +215,12 @@
                         </a>
                     </li>
                     @auth
+                        <li class="dropdown nav-item {{ (request()->is('transaksi*')) ? 'active' : '' }}">
+                            <a class="nav-link d-flex align-items-center" href="{{ url('/transaksi') }}">
+                                <i data-feather="clipboard"></i>
+                                <span>Transaksi</span>
+                            </a>
+                        </li>
                         @if(Auth::user()->role == 'admin')
                         <li class="dropdown nav-item {{ (request()->is('user*')) ? 'active' : '' }}">
                             <a class="nav-link d-flex align-items-center" href="{{ url('/user') }}">
@@ -236,7 +248,7 @@
         <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25"></p>
     </footer>
     <footer class="footer footer-static footer-light footer-shadow">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2021</p>
+        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2022</p>
     </footer>
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
@@ -271,6 +283,8 @@
     <script src="{{ asset('app-assets/js/scripts/pages/app-invoice-list.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
     <!-- END: Page JS-->
+
+    @livewireScripts
 
     @yield('js')
 

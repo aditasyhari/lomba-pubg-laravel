@@ -171,16 +171,19 @@
             <div class="sidebar">
                 <div class="blog-sidebar my-2 my-lg-0">
                     <!-- Search bar -->
-                    <div class="blog-search">
-                        <div class="input-group input-group-merge">
-                            <input type="text" class="form-control" placeholder="Cari berita" />
-                            <div class="input-group-append">
-                                <span class="input-group-text cursor-pointer">
-                                    <i data-feather="search"></i>
-                                </span>
+                    <form action="{{ url('news/search') }}" method="get" id="form">
+                        @csrf
+                        <div class="blog-search">
+                            <div class="input-group input-group-merge">
+                                <input type="text" class="form-control" placeholder="Cari..." name="search" required />
+                                <div class="input-group-append">
+                                    <span class="input-group-text cursor-pointer" onclick="$('#form').submit();">
+                                        <i data-feather="search"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                     <!--/ Search bar -->
 
                     <!-- Recent Posts -->

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tournament;
+use App\Models\Transaksi;
 use Exception;
 use Validator;
 use Storage;
@@ -29,8 +30,29 @@ class TournamentController extends Controller
         try {
             $data = Tournament::with('penyelenggara')->where('slug', $slug)->first();
 
-            return view('tournament.detail', compact(['data']));
+            if(Auth::check()) {
+                $id_user = Auth::user()->id_user;
+                $transaksi = Transaksi::where([
+                    ['id_peserta', $id_user],
+                    ['id_tournament', $data->id_tournament]
+                ])->count();
+                
+                if($transaksi) {
+                    $status = 1; // sudah login dan sudah daftar tournament
+                } else {
+                    if(Auth::user()->email_verified_at == null) {
+                        $status = 3; // sudah login dan belum daftar tournament dan email belum verifikasi
+                    } else  {
+                        $status = 2; // sudah login dan belum daftar tournament
+                    }
+                }
+            } else {
+                $status = 0; // belum login
+            }
+            
+            return view('tournament.detail', compact(['data', 'status']));
         } catch (Exception $e) {
+            dd($e->getMessage());
             return view('error');
         }
     }
@@ -161,6 +183,32 @@ class TournamentController extends Controller
             Tournament::destroy($id);
 
             return redirect('/tournament')->with('success', 'Tournament berhasil dihapus.');
+        } catch (Exception $e) {
+            return view('error');
+        }
+    }
+
+    public function daftar(Request $request, $slug)
+    {
+        try {
+            $tournament = Tournament::where('slug', $slug)->first();
+
+            $pathLogo = "images/transaksi/logo/";
+            $logo = uploads($request->logo, $pathLogo);
+            $input = [
+                'team' => $request->team,
+                'logo' => $logo,
+                'tournament' => $tournament->nama,
+                'peserta' => Auth::user()->nama,
+                'penyelenggara' => $request->penyelenggara,
+                'id_tournament' => $tournament->id_tournament,
+                'id_penyelenggara' => $tournament->id_penyelenggara,
+                'id_peserta' => Auth::user()->id_user,
+            ];
+
+            Transaksi::create($input);
+
+            return back()->with('success', 'Berhasil, silahkan lunasi Pembayaran !');
         } catch (Exception $e) {
             return view('error');
         }

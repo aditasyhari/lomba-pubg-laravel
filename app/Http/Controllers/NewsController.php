@@ -23,6 +23,18 @@ class NewsController extends Controller
         }
     }
 
+    public function search(Request $request)
+    {
+        try {
+            $data = News::with('pembuat')->where('judul', 'like', '%' . $request->search . '%')->orderBy('created_at', 'desc')->paginate(6);
+            $new = News::orderBy('created_at', 'desc')->limit(4)->get();
+    
+            return view('news.index', compact(['data', 'new']));
+        } catch (Exception $e) {
+            return view('error');
+        }
+    }
+
     public function detail($slug)
     {
         try {

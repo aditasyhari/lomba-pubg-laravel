@@ -16,10 +16,13 @@ class Transaksi extends Migration
         //
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id('id_transaksi');
-            $table->string('nama_team');
-            $table->string('logo_team');
-            $table->string('bukti_tf')->nullable();
-            $table->enum('status', ['pending', 'waiting', 'valid'])->default('pending');
+            $table->string('team');
+            $table->string('logo');
+            $table->string('bukti')->nullable();
+            $table->enum('status', ['waiting', 'reject', 'valid'])->default('waiting');
+            $table->string('tournament');
+            $table->string('peserta');
+            $table->string('penyelenggara');
             $table->unsignedBigInteger('id_tournament');
             $table->unsignedBigInteger('id_penyelenggara');
             $table->unsignedBigInteger('id_peserta');
