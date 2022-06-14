@@ -19,7 +19,7 @@ class Transaksi extends Migration
             $table->string('team');
             $table->string('logo');
             $table->string('bukti')->nullable();
-            $table->enum('status', ['waiting', 'reject', 'valid'])->default('waiting');
+            $table->enum('status', ['pending', 'waiting', 'reject', 'valid'])->default('waiting');
             $table->string('tournament');
             $table->string('peserta');
             $table->string('penyelenggara');
