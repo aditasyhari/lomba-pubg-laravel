@@ -121,7 +121,7 @@ $(function () {
       buttons: [
         {
           text: 'Tambah User',
-          className: 'add-new btn btn-primary mt-50',
+          className: 'add-new btn btn-primary mt-50 d-none',
           attr: {
             'data-toggle': 'modal',
             'data-target': '#modals-slide-in'
