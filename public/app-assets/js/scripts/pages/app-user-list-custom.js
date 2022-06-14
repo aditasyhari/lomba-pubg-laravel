@@ -119,17 +119,17 @@ $(function () {
       },
       // Buttons with Dropdown
       buttons: [
-        {
-          text: 'Tambah User',
-          className: 'add-new btn btn-primary mt-50 d-none',
-          attr: {
-            'data-toggle': 'modal',
-            'data-target': '#modals-slide-in'
-          },
-          init: function (api, node, config) {
-            $(node).removeClass('btn-secondary');
-          }
-        }
+        // {
+        //   text: 'Tambah User',
+        //   className: 'add-new btn btn-primary mt-50 d-none',
+        //   attr: {
+        //     'data-toggle': 'modal',
+        //     'data-target': '#modals-slide-in'
+        //   },
+        //   init: function (api, node, config) {
+        //     $(node).removeClass('btn-secondary');
+        //   }
+        // }
       ],
       language: {
         paginate: {
