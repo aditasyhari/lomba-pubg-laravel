@@ -24,7 +24,7 @@ class Tournament extends Migration
             $table->integer('jumlah_slot');
             $table->integer('sisa_slot');
             $table->date('tgl_valid');
-            $table->date('tgl_tornament');
+            $table->date('tgl_tournament');
             $table->longText('deskripsi');
             $table->string('thumbnail');
             $table->string('file')->nullable();
