@@ -26,6 +26,7 @@ class LoginController extends Controller
                 return back()->with('error', 'User tidak ada, silahkan mendaftar!');
             }
         } catch (Exception $e) {
+            return view('error');
             dd($e->getMessage());
         }
     }

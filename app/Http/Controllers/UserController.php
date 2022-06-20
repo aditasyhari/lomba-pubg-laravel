@@ -21,6 +21,16 @@ class UserController extends Controller
         }
     }
 
+    public function reqPenyelenggara()
+    {
+        try {
+            return view('user.req-penyelenggara');
+        } catch (Exception $e) {
+            return view('error');
+            dd($e->getMessage());
+        }
+    }
+
     public function list(Request $request)
     {
         try {
@@ -35,6 +45,37 @@ class UserController extends Controller
             return response()->json([
                 'data' => 'error'
             ], 500);
+        }
+    }
+
+    public function listReqPenyelenggara(Request $request)
+    {
+        try {
+            if($request->ajax()) {
+                $data = User::where('role', 'peserta')->where('request_penyelenggara', 1)->orderBy('updated_at', 'desc')->get();
+
+                return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->make(true);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => 'error'
+            ], 500);
+        }
+    }
+
+    public function validasiReqPenyelenggara($id)
+    {
+        try {
+            $user = User::find($id);
+            $user->update([
+                'role' => 'penyelenggara'
+            ]);
+
+            return response()->json('success', 200);
+        } catch (Exception $e) {
+            return view('error');
         }
     }
 

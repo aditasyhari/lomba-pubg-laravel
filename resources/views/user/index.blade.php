@@ -36,9 +36,11 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>User</th>
+                                    <th>No.HP</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Actions</th>
+                                    <th>Alamat</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                         </table>

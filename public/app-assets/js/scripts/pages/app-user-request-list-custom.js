@@ -10,7 +10,7 @@ $(function () {
       serverSide: true,
       ajax: {
         type: 'GET',
-        url: "user/list",
+        url: "request-penyelenggara/list",
       }, // JSON file to add data
       columns: [
         // { data: 'id_user' },
@@ -87,20 +87,7 @@ $(function () {
           render: function (data, type, full, meta) {
             var id_user = full['id_user'];
             return (
-              '<div class="btn-group">' +
-                '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
-                feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
-                '</a>' +
-                '<div class="dropdown-menu dropdown-menu-right">' +
-                // '<a href="user/detail/'+ id_user +
-                // '" class="dropdown-item">' +
-                // feather.icons['file-text'].toSvg({ class: 'font-small-4 mr-50' }) +
-                // 'Detail</a>' +
-                '<a href="javascript:;" class="dropdown-item delete-record" onclick="hapus('+ id_user +')">' +
-                feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' }) +
-                'Delete</a>' +
-                '</div>' +
-              '</div>'
+              '<button class="btn btn-sm btn-primary" type="button" onclick="validasi('+ id_user +')">validasi</button>'
             );
           }
         }
@@ -144,8 +131,8 @@ $(function () {
   
 });
 
-function hapus(e) {
-  var url = 'user/delete/'+e;
+function validasi(e) {
+  var url = 'request-penyelenggara/validasi/'+e;
 
   $.ajaxSetup({
     headers: {
@@ -155,22 +142,22 @@ function hapus(e) {
 
   Swal.fire({
       title             : "Apakah Anda Yakin ?",
-      text              : "Data Yang Sudah Dihapus Tidak Bisa Dikembalikan!",
+      text              : "",
       icon              : "warning",
       showCancelButton  : true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor : "#d33",
-      confirmButtonText : "Ya, Tetap Hapus!"
+      confirmButtonText : "Ya"
   }).then((result) => {
     if (result.value) {
         $.ajax({
             url    : url,
-            type   : "delete",
+            type   : "put",
             success: function(data) {
               $('.user-list-table').DataTable().ajax.reload();
               Swal.fire({
                   icon: 'success',
-                  title: 'Data User berhasil dihapus.',
+                  title: 'Penyelenggara berhasil di validasi',
                   showConfirmButton: false,
                   timer: 2200,
                   customClass: {

@@ -122,11 +122,20 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Ganti Role</label>
-                                                        <select name="role" id="" class="form-control">
-                                                            <option {{ ($user->role == 'peserta'? 'selected' : '') }} value="peserta">Peserta</option>
-                                                            <option {{ ($user->role == 'penyelenggara'? 'selected' : '') }} value="penyelenggara">Penyelenggara</option>
-                                                        </select>
+                                                        <label>Role <span class="text-uppercase">({{ $user->role }})</span></label>
+                                                        @if($user->role == 'peserta')
+                                                            <select name="request_penyelenggara" id="" class="form-control">
+                                                                <option selected disabled>Pilih Aksi</option>
+                                                                <option value="1">Request Penyelenggara</option>
+                                                            </select>
+                                                            @if($user->request_penyelenggara == 0)
+                                                            <small class="text-warning">Jika ingin menjadi PENYELENGGARA tournament, bisa request kepada admin dengan cara pilih aksi diatas.</small>
+                                                            @else
+                                                            <small class="text-info">Anda sudah meminta menjadi PENYELENGGARA, tunggu validasi dari Admin.</small>
+                                                            @endif
+                                                        @else
+                                                            <h1 class="text-capitalize">{{ Auth::user()->role }}</h1>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-12">

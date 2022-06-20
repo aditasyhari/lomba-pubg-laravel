@@ -20,8 +20,8 @@ class TournamentController extends Controller
 
             return view('tournament.index', compact(['data']));
         } catch (Exception $e) {
-            dd($e->getMessage());
             return view('error');
+            dd($e->getMessage());
         }
     }
 
@@ -52,8 +52,8 @@ class TournamentController extends Controller
             
             return view('tournament.detail', compact(['data', 'status']));
         } catch (Exception $e) {
-            dd($e->getMessage());
             return view('error');
+            dd($e->getMessage());
         }
     }
 
@@ -111,8 +111,8 @@ class TournamentController extends Controller
 
             return back()->with('success', 'Tournament berhasil diposting !');
         } catch (Exception $e) {
-            dd($e->getMessage());
             return view('error');
+            dd($e->getMessage());
         }
     }
 
@@ -160,8 +160,8 @@ class TournamentController extends Controller
 
             return redirect('/tournament')->with('success', 'Tournament berhasil diperbarui !');
         } catch (Exception $e) {
-            dd($e->getMessage());
             return view('error');
+            dd($e->getMessage());
         }
     }
 

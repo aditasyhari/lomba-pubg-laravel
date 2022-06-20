@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'peserta', 'penyelenggara'])->default('peserta');
+            $table->boolean('request_penyelenggara')->default(false);
             $table->rememberToken();
             $table->string('foto')->nullable();
             $table->string('google_foto')->nullable();

@@ -42,6 +42,7 @@ class GoogleController extends Controller
             }
 
         } catch (Exception $e) {
+            return view('error');
             dd($e->getMessage());
         }
     }

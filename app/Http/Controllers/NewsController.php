@@ -87,8 +87,8 @@ class NewsController extends Controller
 
             return back()->with('success', 'Berita berhasil ditambahkan !');
         } catch (Exception $e) {
-            // dd($e->getMessage());
             return view('error');
+            dd($e->getMessage());
         }
     }
 

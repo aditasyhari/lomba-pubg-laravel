@@ -34,7 +34,8 @@ class RegisterController extends Controller
             Auth::login($newUser);
             return redirect('/');
 
-        } catch (Exception $e) {
+        } catch (Exception $e) {    
+            return view('error');
             dd($e->getMessage());
         }
     }

@@ -94,6 +94,11 @@ Route::middleware('auth')->group(function () {
         Route::get('user/list', [UserController::class, 'list']);
         Route::get('user/detail/{id}', [UserController::class, 'show']);
         Route::delete('user/delete/{id}', [UserController::class, 'delete']);
+
+        // request penyelenggara
+        Route::get('request-penyelenggara', [UserController::class, 'reqPenyelenggara']);
+        Route::get('request-penyelenggara/list', [UserController::class, 'listReqPenyelenggara']);
+        Route::put('request-penyelenggara/validasi/{id}', [UserController::class, 'validasiReqPenyelenggara']);
     });
 });
 

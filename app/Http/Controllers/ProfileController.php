@@ -21,7 +21,7 @@ class ProfileController extends Controller
 
             return view('profile.show', compact('user'));
         } catch (Exception $e) {
-            return view('error-500');
+            return view('error');
         }
     }
 
@@ -33,20 +33,22 @@ class ProfileController extends Controller
                 'email' => 'required',
                 'no_hp' => 'required|numeric',
                 'alamat' => 'required',
-                'role' => 'nullable'
+                'request_penyelenggara' => 'nullable'
             ]);
 
             if ($validator->fails()) {
                 return back()->withErrors($validator);
             }
 
+            $input = $request->all();
+            $input['updated_at'] = date("Y-m-d H:i:s");
             $user = User::find(Auth::user()->id_user);
             $user->update($request->all());
 
             return back()->with('success', 'Profile berhasil diperbarui');
         } catch (Exception $e) {
+            return view('error');
             dd($e->getMessage());
-            // return view('error-500');
         }
     }
 
@@ -75,8 +77,8 @@ class ProfileController extends Controller
 
             return back()->with('success', 'Foto Profile berhasil diperbarui');
         } catch (Exception $e) {
+            return view('error');
             dd($e->getMessage());
-            // return view('error-500');
         }
     }
 
@@ -104,8 +106,8 @@ class ProfileController extends Controller
 
             return back()->with('error', 'Password lama tidak sesuai');
         } catch (Exception $e) {
+            return view('error');
             dd($e->getMessage());
-            // return view('error-500');
         }
     }
 
