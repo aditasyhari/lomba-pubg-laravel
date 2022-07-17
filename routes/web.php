@@ -99,6 +99,7 @@ Route::middleware('auth')->group(function () {
         Route::get('request-penyelenggara', [UserController::class, 'reqPenyelenggara']);
         Route::get('request-penyelenggara/list', [UserController::class, 'listReqPenyelenggara']);
         Route::put('request-penyelenggara/validasi/{id}', [UserController::class, 'validasiReqPenyelenggara']);
+        Route::put('request-penyelenggara/reject/{id}', [UserController::class, 'rejectReqPenyelenggara']);
     });
 });
 

@@ -79,6 +79,27 @@ class UserController extends Controller
         }
     }
 
+    public function rejectReqPenyelenggara($id)
+    {
+        try {
+            $user = User::find($id);
+            $path = "images/bukti-penyelenggara/";
+
+            if (Storage::disk('public')->exists($path.$user->bukti_tf)) {
+                Storage::disk('public')->delete($path.$user->bukti_tf);
+            }
+
+            $user->update([
+                'request_penyelenggara' => 0,
+                'bukti_tf' => null
+            ]);
+
+            return response()->json('success', 200);
+        } catch (Exception $e) {
+            return view('error');
+        }
+    }
+
     public function show($id)
     {
         try {

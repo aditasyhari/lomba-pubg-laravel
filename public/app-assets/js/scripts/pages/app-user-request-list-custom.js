@@ -2,6 +2,7 @@ $(function () {
   'use strict';
 
   var dtUserTable = $('.user-list-table');
+  var base_url = window.location.origin;
 
   // Users List datatable
   if (dtUserTable.length) {
@@ -29,7 +30,6 @@ $(function () {
             var $name = full['nama'],
               $image = full['foto'];
             if ($image) {
-              var base_url = window.location.origin;
               var $output =
                 '<img src="' + base_url + "/storage/images/profile/" + $image + '" alt="Avatar" height="32" width="32">';
             } else {
@@ -86,8 +86,11 @@ $(function () {
           orderable: false,
           render: function (data, type, full, meta) {
             var id_user = full['id_user'];
+            var bukti = full['bukti_tf'];
             return (
-              '<button class="btn btn-sm btn-primary" type="button" onclick="validasi('+ id_user +')">validasi</button>'
+              '<a href="' + base_url + "/storage/images/bukti-penyelenggara/" + bukti + '" class="btn btn-sm btn-warning mr-1" target="_blank">Lihat Bukti</a>' +
+              '<button class="btn btn-sm btn-primary mr-1" type="button" onclick="validasi('+ id_user +')">validasi</button>' +
+              '<button class="btn btn-sm btn-danger" type="button" onclick="reject('+ id_user +')">tolak</button>'
             );
           }
         }
@@ -141,7 +144,7 @@ function validasi(e) {
   });
 
   Swal.fire({
-      title             : "Apakah Anda Yakin ?",
+      title             : "Apakah Anda Yakin Validasi ?",
       text              : "",
       icon              : "warning",
       showCancelButton  : true,
@@ -158,6 +161,46 @@ function validasi(e) {
               Swal.fire({
                   icon: 'success',
                   title: 'Penyelenggara berhasil di validasi',
+                  showConfirmButton: false,
+                  timer: 2200,
+                  customClass: {
+                  confirmButton: 'btn btn-primary'
+                  },
+                  buttonsStyling: false
+              });
+            }
+        })
+    }
+  })
+}
+
+function reject(e) {
+  var url = 'request-penyelenggara/reject/'+e;
+
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+  Swal.fire({
+      title             : "Apakah Anda Yakin Tolak ?",
+      text              : "",
+      icon              : "warning",
+      showCancelButton  : true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor : "#d33",
+      confirmButtonText : "Ya"
+  }).then((result) => {
+    if (result.value) {
+        $.ajax({
+            url    : url,
+            type   : "put",
+            success: function(data) {
+              $('.user-list-table').DataTable().ajax.reload();
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Bukti Penyelenggara berhasil di tolak',
                   showConfirmButton: false,
                   timer: 2200,
                   customClass: {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Setting;
 use Validator;
 use Exception;
 use Storage;
@@ -19,7 +20,12 @@ class ProfileController extends Controller
             $id_user = Auth::user()->id_user;
             $user = User::find($id_user);
 
-            return view('profile.show', compact('user'));
+            if(Auth::user()->role == 'peserta') {
+                $setting = Setting::select('daftar_penyelenggara', 'info_bank')->first();
+                return view('profile.show', compact(['user', 'setting']));
+            }
+
+            return view('profile.show', compact(['user']));
         } catch (Exception $e) {
             return view('error');
         }
@@ -33,19 +39,33 @@ class ProfileController extends Controller
                 'email' => 'required',
                 'no_hp' => 'required|numeric',
                 'alamat' => 'required',
-                'request_penyelenggara' => 'nullable'
+                'request_penyelenggara' => 'nullable',
+                'bukti_tf' => 'nullable'
             ]);
 
             if ($validator->fails()) {
                 return back()->withErrors($validator);
             }
 
-            $input = $request->all();
+            $input = $request->except(['bukti_tf']);
             $input['updated_at'] = date("Y-m-d H:i:s");
             $user = User::find(Auth::user()->id_user);
-            $user->update($request->all());
+            $message = 'Profile Berhasil diperbarui.';
 
-            return back()->with('success', 'Profile berhasil diperbarui');
+            if($request->request_penyelenggara) {
+                if(!$request->bukti_tf) {
+                    return back()->with('error', 'Upload Bukti Transfer !');
+                }
+
+                $path = "images/bukti-penyelenggara/";
+                $nameFile = uploads($request->bukti_tf, $path);
+                $input['bukti_tf'] = $nameFile;
+                $message = 'Profile Berhasil diperbarui. Tunggu validasi Admin terlebih dahulu.';
+            }
+
+            $user->update($input);
+
+            return back()->with('success', $message);
         } catch (Exception $e) {
             return view('error');
             dd($e->getMessage());

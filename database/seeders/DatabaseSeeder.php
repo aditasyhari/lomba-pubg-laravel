@@ -19,5 +19,10 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'role' => 'admin'
         ]);
+
+        \App\Models\Setting::create([
+            'daftar_penyelenggara' => 150000,
+            'info_bank' => 'BCA 30189818 a/n Prima Pangestu',
+        ]);
     }
 }

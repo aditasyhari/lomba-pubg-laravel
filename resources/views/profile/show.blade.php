@@ -6,6 +6,12 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/pickers/form-pickadate.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/form-validation.css') }}">
+
+<style>
+    .bukti {
+        display: none;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -98,7 +104,7 @@
                                             </div>
                                         @endif
                                         <!-- form -->
-                                        <form class="validate-form mt-2" action="{{ url('/profile/update-general') }}" method="POST">
+                                        <form class="validate-form mt-2" action="{{ url('/profile/update-general') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('put')
                                             <div class="row">
@@ -124,10 +130,17 @@
                                                     <div class="form-group">
                                                         <label>Role <span class="text-uppercase">({{ $user->role }})</span></label>
                                                         @if($user->role == 'peserta')
-                                                            <select name="request_penyelenggara" id="" class="form-control">
+                                                            <select onchange="showbukti()" name="request_penyelenggara" id="req-penyelenggara" class="form-control">
                                                                 <option selected disabled>Pilih Aksi</option>
                                                                 <option value="1">Request Penyelenggara</option>
                                                             </select>
+
+                                                            <div class="mt-1 bukti">
+                                                                <label for="">Bukti Transfer</label>
+                                                                <input type="file" name="bukti_tf" class="form-control">
+                                                                <h6 class="mt-2">Biaya menjadi penyelenggara : <span class="text-info">Rp {{ number_format($setting->daftar_penyelenggara, 0, '.', '.') }}</span></h6>
+                                                                <h6 class="">Info Bank : <span class="text-info">{{ $setting->info_bank }}</span></h6>
+                                                            </div>
                                                             @if($user->request_penyelenggara == 0)
                                                             <small class="text-warning">Jika ingin menjadi PENYELENGGARA tournament, bisa request kepada admin dengan cara pilih aksi diatas.</small>
                                                             @else
@@ -337,6 +350,12 @@
 @endsection
 
 @section('js')
+    <script>
+        function showbukti()
+        {
+            $('.bukti').css({'display': 'block'});
+        }
+    </script>
     @if($message = Session::get('success'))
     <script>
         Swal.fire({
