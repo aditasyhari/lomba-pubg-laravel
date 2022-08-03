@@ -27,8 +27,8 @@ class ProfileController extends Controller
 
             return view('profile.show', compact(['user']));
         } catch (Exception $e) {
-            return dd($e);
             return view('error');
+            return dd($e->getMessage());
         }
     }
 
