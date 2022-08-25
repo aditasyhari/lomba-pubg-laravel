@@ -164,6 +164,7 @@
                     <!-- Product Details ends -->
 
                     <!-- peserta tournament -->
+                    @auth
                     @if(Auth::user()->role == 'penyelenggara')
                         <hr>
                         <h3 class="ml-2 mb-2">Daftar Peserta Tournament</h3>
@@ -239,6 +240,7 @@
                             </section>
                         </div>
                     @endif
+                    @endauth
 
                     <!-- Item features starts -->
                     <div class="item-features">
