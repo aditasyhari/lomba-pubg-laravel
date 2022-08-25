@@ -95,39 +95,46 @@
                                     </div>
                                 </p>
                                 <div class="d-flex flex-column flex-sm-row pt-1">
-                                    @if($data->id_penyelenggara != Auth::user()->id_user)
-                                        @switch($status)
-                                            @case(0)
-                                                <a href="{{ url('login') }}" class="btn btn-warning mr-0 mr-sm-1 mb-1 mb-sm-0" disabled>
-                                                    <i data-feather="corner-down-right" class="mr-50"></i>
-                                                    <span class="add-to-cart">Silahkan Login</span>
-                                                </a>
-                                                @break
-                                            @case(1)
-                                                <div class="btn btn-info mr-0 mr-sm-1 mb-1 mb-sm-0">
-                                                    <i data-feather="corner-down-right" class="mr-50"></i>
-                                                    <span class="add-to-cart">Sudah Daftar</span>
-                                                </div>
-                                                @break
-                                            @case(2)
+                                    @switch($status)
+                                        @case(0)
+                                            <a href="{{ url('login') }}" class="btn btn-warning mr-0 mr-sm-1 mb-1 mb-sm-0" disabled>
+                                                <i data-feather="corner-down-right" class="mr-50"></i>
+                                                <span class="add-to-cart">Silahkan Login</span>
+                                            </a>
+                                            @break
+                                        @case(1)
+                                            <div class="btn btn-info mr-0 mr-sm-1 mb-1 mb-sm-0">
+                                                <i data-feather="corner-down-right" class="mr-50"></i>
+                                                <span class="add-to-cart">Sudah Daftar</span>
+                                            </div>
+                                            @break
+                                        @case(2)
+                                            @if($data->id_penyelenggara != Auth::user()->id_user)
                                                 <button type="button" class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0" data-toggle="modal" data-target="#formDaftar">
                                                     <i data-feather="corner-down-right" class="mr-50"></i>
                                                     <span class="add-to-cart">Daftar</span>
                                                 </button>
-                                                @break
-                                            @case(3)
+                                            @else
+                                                <a href="#" class="btn btn-warning mr-0 mr-sm-1 mb-1 mb-sm-0" disabled>
+                                                    <i data-feather="corner-down-right" class="mr-50"></i>
+                                                    <span class="add-to-cart">Anda Penyelenggara Tournament</span>
+                                                </a>
+                                            @endif
+                                            @break
+                                        @case(3)
+                                            @if($data->id_penyelenggara != Auth::user()->id_user)
                                                 <button type="button" class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0" data-toggle="modal" data-target="#modalverifikasi">
                                                     <i data-feather="corner-down-right" class="mr-50"></i>
                                                     <span class="add-to-cart">Daftar</span>
                                                 </button>
-                                                @break
-                                        @endswitch
-                                    @else
-                                        <a href="#" class="btn btn-warning mr-0 mr-sm-1 mb-1 mb-sm-0" disabled>
-                                            <i data-feather="corner-down-right" class="mr-50"></i>
-                                            <span class="add-to-cart">Anda Penyelenggara Tournament</span>
-                                        </a>
-                                    @endif
+                                            @else
+                                                <a href="#" class="btn btn-warning mr-0 mr-sm-1 mb-1 mb-sm-0" disabled>
+                                                    <i data-feather="corner-down-right" class="mr-50"></i>
+                                                    <span class="add-to-cart">Anda Penyelenggara Tournament</span>
+                                                </a>
+                                            @endif
+                                            @break
+                                    @endswitch
                                     @if($data->file != null && $data != '')
                                     <a href="{{ url('storage/images/tournament/file/'.$data->file) }}" target="_blank" class="btn btn-secondary mr-0 mr-sm-1 mb-1 mb-sm-0">
                                         <i data-feather="download" class="mr-50"></i>
