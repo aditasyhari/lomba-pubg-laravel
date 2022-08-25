@@ -95,32 +95,39 @@
                                     </div>
                                 </p>
                                 <div class="d-flex flex-column flex-sm-row pt-1">
-                                    @switch($status)
-                                        @case(0)
-                                            <a href="{{ url('login') }}" class="btn btn-warning mr-0 mr-sm-1 mb-1 mb-sm-0" disabled>
-                                                <i data-feather="corner-down-right" class="mr-50"></i>
-                                                <span class="add-to-cart">Silahkan Login</span>
-                                            </a>
-                                            @break
-                                        @case(1)
-                                            <div class="btn btn-info mr-0 mr-sm-1 mb-1 mb-sm-0">
-                                                <i data-feather="corner-down-right" class="mr-50"></i>
-                                                <span class="add-to-cart">Sudah Daftar</span>
-                                            </div>
-                                            @break
-                                        @case(2)
-                                            <button type="button" class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0" data-toggle="modal" data-target="#formDaftar">
-                                                <i data-feather="corner-down-right" class="mr-50"></i>
-                                                <span class="add-to-cart">Daftar</span>
-                                            </button>
-                                            @break
-                                        @case(3)
-                                            <button type="button" class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0" data-toggle="modal" data-target="#modalverifikasi">
-                                                <i data-feather="corner-down-right" class="mr-50"></i>
-                                                <span class="add-to-cart">Daftar</span>
-                                            </button>
-                                            @break
-                                    @endswitch
+                                    @if($data->id_penyelenggara != Auth::user()->id_user)
+                                        @switch($status)
+                                            @case(0)
+                                                <a href="{{ url('login') }}" class="btn btn-warning mr-0 mr-sm-1 mb-1 mb-sm-0" disabled>
+                                                    <i data-feather="corner-down-right" class="mr-50"></i>
+                                                    <span class="add-to-cart">Silahkan Login</span>
+                                                </a>
+                                                @break
+                                            @case(1)
+                                                <div class="btn btn-info mr-0 mr-sm-1 mb-1 mb-sm-0">
+                                                    <i data-feather="corner-down-right" class="mr-50"></i>
+                                                    <span class="add-to-cart">Sudah Daftar</span>
+                                                </div>
+                                                @break
+                                            @case(2)
+                                                <button type="button" class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0" data-toggle="modal" data-target="#formDaftar">
+                                                    <i data-feather="corner-down-right" class="mr-50"></i>
+                                                    <span class="add-to-cart">Daftar</span>
+                                                </button>
+                                                @break
+                                            @case(3)
+                                                <button type="button" class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0" data-toggle="modal" data-target="#modalverifikasi">
+                                                    <i data-feather="corner-down-right" class="mr-50"></i>
+                                                    <span class="add-to-cart">Daftar</span>
+                                                </button>
+                                                @break
+                                        @endswitch
+                                    @else
+                                        <a href="#" class="btn btn-warning mr-0 mr-sm-1 mb-1 mb-sm-0" disabled>
+                                            <i data-feather="corner-down-right" class="mr-50"></i>
+                                            <span class="add-to-cart">Anda Penyelenggara Tournament</span>
+                                        </a>
+                                    @endif
                                     @if($data->file != null && $data != '')
                                     <a href="{{ url('storage/images/tournament/file/'.$data->file) }}" target="_blank" class="btn btn-secondary mr-0 mr-sm-1 mb-1 mb-sm-0">
                                         <i data-feather="download" class="mr-50"></i>
@@ -148,6 +155,83 @@
                         </div>
                     </div>
                     <!-- Product Details ends -->
+
+                    <!-- peserta tournament -->
+                    @if(Auth::user()->role == 'penyelenggara')
+                        <hr>
+                        <h3 class="ml-2 mb-2">Daftar Peserta Tournament</h3>
+                        <div class="content-body">
+                            <section class="app-user-list">
+                                <div class="card">
+                                    <div class="card-datatable table-responsive pt-0">
+                                        <table class="user-list-table table">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Logo</th>
+                                                    <th>Nama Team</th>
+                                                    <th>Anggota 1 (Ketua)</th>
+                                                    <th>Anggota 2</th>
+                                                    <th>Anggota 3</th>
+                                                    <th>Anggota 4</th>
+                                                    <th>Anggota 5 (Cadangan)</th>
+                                                    <th>Tipe</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($data->peserta_tournament as $pt)
+                                                    <tr>
+                                                        <td>
+                                                            <a href="{{ url('storage/images/transaksi/logo/'.$pt->logo) }}" target="_blank" rel="noopener noreferrer">
+                                                                <img src="{{ url('storage/images/transaksi/logo/'.$pt->logo) }}" alt="Logo" height="48" width="48">
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            {{ $pt->team }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $pt->anggota_1 }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $pt->anggota_2 }}
+                                                        </td>
+                                                        <td>
+                                                            @if($pt->anggota_3 == '' || $pt->anggota_3 == null)
+                                                                -
+                                                            @else
+                                                                {{ $pt->anggota_3 }}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($pt->anggota_4 == '' || $pt->anggota_4 == null)
+                                                                -
+                                                            @else
+                                                                {{ $pt->anggota_4 }}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($pt->anggota_5 == '' || $pt->anggota_5 == null)
+                                                                -
+                                                            @else
+                                                                {{ $pt->anggota_5 }}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($pt->tipe == 1)
+                                                                Squad
+                                                            @else
+                                                                Duo
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </section>
+                        </div>
+                    @endif
 
                     <!-- Item features starts -->
                     <div class="item-features">
@@ -217,6 +301,61 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="form-group">
+                                <label for="">Nama Anggota 1 (Ketua)</label>
+                                <input type="text" class="form-control" id="basicInput" name="anggota_1" placeholder="Masukkan nama anggota" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="form-group">
+                                <label for="">Nama Anggota 2</label>
+                                <input type="text" class="form-control" id="basicInput" name="anggota_2" placeholder="Masukkan nama anggota" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="form-group">
+                                <label for="">Nama Anggota 3</label>
+                                <input type="text" class="form-control" id="basicInput" name="anggota_3" placeholder="Masukkan nama anggota"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="form-group">
+                                <label for="">Nama Anggota 4</label>
+                                <input type="text" class="form-control" id="basicInput" name="anggota_4" placeholder="Masukkan nama anggota"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="form-group">
+                                <label for="">Nama Anggota 5 (Cadangan)</label>
+                                <input type="text" class="form-control" id="basicInput" name="anggota_5" placeholder="Masukkan nama anggota"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2">
+                            <div class="form-group">
+                                <label for="">Squad</label>
+                                <input type="radio" value="1" class="custom-control custom-radio" id="" name="squad" checked/>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2">
+                            <div class="form-group">
+                                <label for="">Duo</label>
+                                <input type="radio" value="0" class="custom-control custom-radio" id="" name="squad"/>
+                            </div>
+                        </div>
+                    </div>
+
                     <input type="hidden" value="{{ $data->penyelenggara->nama }}" name="penyelenggara">
                 </div>
              <div class="modal-footer">
@@ -296,4 +435,5 @@
         });
     });
 </script>
+
 @endsection

@@ -236,7 +236,7 @@
                                     </div>
                                     @endif
                                 @endif
-                                @if(Auth::user()->role == 'peserta' && Auth::user()->id_user == $peserta->id_user)
+                                @if(Auth::user()->id_user != $tournament->id_penyelenggara)
                                     @if($transaksi->status == 'pending' || $transaksi->status == 'reject')
                                     <button class="btn btn-success btn-block" data-toggle="modal" data-target="#upload-sidebar">
                                         Upload Bukti

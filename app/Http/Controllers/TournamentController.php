@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tournament;
 use App\Models\Transaksi;
+use App\Models\PesertaTournament;
 use Exception;
 use Validator;
 use Storage;
 use Auth;
 use Str;
+use DB;
 
 class TournamentController extends Controller
 {
@@ -25,6 +27,22 @@ class TournamentController extends Controller
         }
     }
 
+    public function follow()
+    {
+        try {
+            $data = Tournament::select('tournament.*', 'transaksi.status')->with('penyelenggara')
+                    ->join('transaksi', 'transaksi.id_tournament', 'tournament.id_tournament')
+                    ->where('transaksi.id_peserta', Auth::user()->id_user)
+                    ->orderBy('tournament.tgl_valid', 'desc')
+                    ->paginate(9);
+
+            return view('tournament.follow', compact(['data']));
+        } catch (Exception $e) {
+            return view('error');
+            dd($e->getMessage());
+        }
+    }
+
     public function detail($slug)
     {
         try {
@@ -32,6 +50,14 @@ class TournamentController extends Controller
 
             if(Auth::check()) {
                 $id_user = Auth::user()->id_user;
+
+                if($id_user == $data->id_penyelenggara) {
+                    $data['peserta_tournament'] = PesertaTournament::join('transaksi', 'transaksi.id_transaksi', 'peserta_tournament.id_transaksi')
+                                                    ->where('peserta_tournament.id_tournament', $data->id_tournament)
+                                                    ->where('transaksi.status', 'valid')
+                                                    ->get();
+                }
+
                 $transaksi = Transaksi::where([
                     ['id_peserta', $id_user],
                     ['id_tournament', $data->id_tournament]
@@ -87,29 +113,34 @@ class TournamentController extends Controller
                 return back()->withErrors($validator->errors());
             }
 
-            $pathThumbnail = "images/tournament/thumbnail/";
-            $pathFile = "images/tournament/file/";
-            $thumbnail = uploads($request->thumbnail, $pathThumbnail);
-            $file = uploads($request->file_poster, $pathFile);
+            $total_tournament = Tournament::where('id_penyelenggara', Auth::user()->id_user)->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count(); 
+            if(Auth::user()->max_post > $total_tournament) {
+                $pathThumbnail = "images/tournament/thumbnail/";
+                $pathFile = "images/tournament/file/";
+                $thumbnail = uploads($request->thumbnail, $pathThumbnail);
+                $file = uploads($request->file_poster, $pathFile);
+    
+                $input = [
+                    'nama' => $request->nama,
+                    'slug' => Str::slug($request->nama),
+                    'lokasi' => $request->lokasi,
+                    'jumlah_slot' => $request->jumlah_slot,
+                    'sisa_slot' => $request->jumlah_slot,
+                    'biaya_pendaftaran' => $request->biaya_pendaftaran,
+                    'tgl_valid' => $request->tgl_valid,
+                    'tgl_tournament' => $request->tgl_tournament,
+                    'deskripsi' => $request->deskripsi,
+                    'thumbnail' => $thumbnail,
+                    'file' => $file,
+                    'id_penyelenggara' => Auth::user()->id_user
+                ];
+    
+                Tournament::create($input);
+    
+                return back()->with('success', 'Tournament berhasil diposting !');
+            }
 
-            $input = [
-                'nama' => $request->nama,
-                'slug' => Str::slug($request->nama),
-                'lokasi' => $request->lokasi,
-                'jumlah_slot' => $request->jumlah_slot,
-                'sisa_slot' => $request->jumlah_slot,
-                'biaya_pendaftaran' => $request->biaya_pendaftaran,
-                'tgl_valid' => $request->tgl_valid,
-                'tgl_tournament' => $request->tgl_tournament,
-                'deskripsi' => $request->deskripsi,
-                'thumbnail' => $thumbnail,
-                'file' => $file,
-                'id_penyelenggara' => Auth::user()->id_user
-            ];
-
-            Tournament::create($input);
-
-            return back()->with('success', 'Tournament berhasil diposting !');
+            return back()->with('error', 'Limit posting tournament per bulan sudah mencapai batas !');
         } catch (Exception $e) {
             return view('error');
             dd($e->getMessage());
@@ -190,6 +221,7 @@ class TournamentController extends Controller
 
     public function daftar(Request $request, $slug)
     {
+        DB::beginTransaction();
         try {
             $tournament = Tournament::where('slug', $slug)->first();
 
@@ -206,10 +238,28 @@ class TournamentController extends Controller
                 'id_peserta' => Auth::user()->id_user,
             ];
 
-            Transaksi::create($input);
+            $tr = Transaksi::create($input);
+
+            $input = [
+                'team' => $request->team,
+                'logo' => $logo,
+                'anggota_1' => $request->anggota_1,
+                'anggota_2' => $request->anggota_2,
+                'anggota_3' => $request->anggota_3,
+                'anggota_4' => $request->anggota_4,
+                'anggota_5' => $request->anggota_5,
+                'squad' => $request->squad,
+                'id_tournament' => $tournament->id_tournament,
+                'id_transaksi' => $tr->id_transaksi,
+                'id_peserta' => Auth::user()->id_user,
+            ];
+
+            PesertaTournament::create($input);
+            DB::commit();
 
             return back()->with('success', 'Berhasil, silahkan lunasi Pembayaran !');
         } catch (Exception $e) {
+            DB::rollback();
             return view('error');
         }
     }

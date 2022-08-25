@@ -212,4 +212,20 @@
     });
 </script>
 @endif
+
+@if($message = Session::get('error'))
+<script>
+    Swal.fire({
+        // position: 'top-end',
+        icon: 'error',
+        title: '{{ $message }}',
+        showConfirmButton: false,
+        timer: 2000,
+        customClass: {
+          confirmButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    });
+</script>
+@endif
 @endsection

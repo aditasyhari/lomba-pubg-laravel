@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title') Tournament @endsection
+@section('title') Tournament Diikuti @endsection
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/app-ecommerce.css') }}">
@@ -19,7 +19,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a>
                                 </li>
-                                <li class="breadcrumb-item active">Semua Tournament
+                                <li class="breadcrumb-item active">Tournament Diikuti
                                 </li>
                             </ol>
                         </div>
@@ -37,12 +37,6 @@
                                     <button class="navbar-toggler shop-sidebar-toggler" type="button" data-toggle="collapse">
                                         <span class="navbar-toggler-icon d-block d-lg-none"><i data-feather="menu"></i></span>
                                     </button>
-                                    <!-- <div class="search-results">16285 hasil ditemukan</div> -->
-                                    @auth
-                                        @if(Auth::user()->role != 'peserta')
-                                            <a href="{{ url('/tournament/add') }}" class="btn btn-primary">Posting Tournament</a>
-                                        @endif
-                                    @endauth
                                 </div>
                                 <div class="view-options d-flex">
                                     <div class="btn-group dropdown-sort">

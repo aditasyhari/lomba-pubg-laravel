@@ -202,11 +202,15 @@
                             <span>Berita</span>
                         </a>
                     </li>
-                    <li class="dropdown nav-item {{ (request()->is('tournament*')) ? 'active' : '' }}">
-                        <a class="nav-link d-flex align-items-center" href="{{ url('/tournament') }}">
-                            <i data-feather="info"></i>
-                            <span>Tournament</span>
-                        </a>
+                    <li class="dropdown nav-item {{ (request()->is('tournament*')) ? 'active' : '' }}"><a class="d-flex align-items-center">
+                        <i data-feather="info"></i>
+                        <span>Tournament</span>
+                        <ul class="dropdown-menu">
+                            <li data-menu=""><a class="dropdown-item" href="{{ url('/tournament') }}" data-toggle="dropdown">Semua Tournament</a>
+                            </li>
+                            <li data-menu=""><a class="dropdown-item" href="{{ url('/tournament/follow') }}" data-toggle="dropdown">Tournament Diikuti</a>
+                            </li>                          
+                        </ul>
                     </li>
                     <li class="dropdown nav-item {{ (request()->is('pemenang*')) ? 'active' : '' }}">
                         <a class="nav-link d-flex align-items-center" href="{{ url('/pemenang') }}">

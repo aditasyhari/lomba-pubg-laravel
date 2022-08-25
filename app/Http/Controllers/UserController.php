@@ -35,7 +35,7 @@ class UserController extends Controller
     {
         try {
             if($request->ajax()) {
-                $data = User::orderBy('role', 'asc')->get();
+                $data = User::where('role', $request->type)->orderBy('nama', 'asc')->get();
 
                 return DataTables::of($data)
                         ->addIndexColumn()
@@ -70,7 +70,8 @@ class UserController extends Controller
         try {
             $user = User::find($id);
             $user->update([
-                'role' => 'penyelenggara'
+                'role' => 'penyelenggara',
+                'max_post' => 4
             ]);
 
             return response()->json('success', 200);
@@ -122,6 +123,20 @@ class UserController extends Controller
             }
 
             User::destroy($id);
+
+            return response()->json('success', 200);
+        } catch (Exception $e) {
+            return view('error');
+        }
+    }
+
+    public function editMaxPost(Request $request, $id)
+    {
+        try {
+            $data = User::find($id);
+            $maxpost = $request->maxpost;
+            
+            $data->update(['max_post' => $maxpost]);
 
             return response()->json('success', 200);
         } catch (Exception $e) {

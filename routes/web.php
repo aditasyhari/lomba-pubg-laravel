@@ -35,6 +35,7 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/', [GlobalController::class, 'home']);
 
 Route::middleware('auth')->group(function () {
+    Route::get('tournament/follow', [TournamentController::class, 'follow']);
 
     Route::get('/email/verify', function () {
         return view('auth.verify-email');
@@ -94,6 +95,7 @@ Route::middleware('auth')->group(function () {
         Route::get('user/list', [UserController::class, 'list']);
         Route::get('user/detail/{id}', [UserController::class, 'show']);
         Route::delete('user/delete/{id}', [UserController::class, 'delete']);
+        Route::post('user/edit-max-post/{id}', [UserController::class, 'editMaxPost']);
 
         // request penyelenggara
         Route::get('request-penyelenggara', [UserController::class, 'reqPenyelenggara']);
