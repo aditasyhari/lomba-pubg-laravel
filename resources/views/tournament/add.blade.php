@@ -87,14 +87,24 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-group mb-2">
-                                                <label for="blog-edit-status">Biaya Pendaftaran (Rp)</label>
-                                                <input type="number" class="form-control" name="biaya_pendaftaran" placeholder="biaya" required/>
+                                                <label for="blog-edit-status">Type</label>
+                                                <select name="type" id="" class="form-control" required>
+                                                    <option value="solo">Solo</option>
+                                                    <option value="duo">Duo</option>
+                                                    <option value="squad" selected>Squad</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-group mb-2">
                                                 <label for="blog-edit-status">Terakhir Pendaftaran</label>
                                                 <input type="date" class="form-control" name="tgl_valid" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mb-2">
+                                                <label for="blog-edit-status">Biaya Pendaftaran (Rp)</label>
+                                                <input type="number" class="form-control" name="biaya_pendaftaran" placeholder="biaya" required/>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">

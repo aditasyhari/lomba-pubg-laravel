@@ -64,7 +64,7 @@ class WinnerController extends Controller
                 'slug' => Str::slug($request->judul),
                 'isi' => $request->konten,
                 'thumbnail' => $thumbnail,
-                'id_admin' => Auth::user()->id_user
+                'id_user' => Auth::user()->id_user
             ];
 
             Pemenang::create($input);

@@ -43,6 +43,10 @@
                                     <i class="mr-1" data-feather="edit-2"></i>
                                     <span class="align-middle">Edit</span>
                                 </a>
+                                <a class="dropdown-item" href="{{ url('/tournament/detail/'.$data->slug.'/add-winner') }}">
+                                    <i class="mr-1" data-feather="plus"></i>
+                                    <span class="align-middle">Pemenang</span>
+                                </a>
                                 <form id="form-delete" action="{{ url('/tournament/detail/delete/'.$data->id_tournament) }}" method="post">
                                     @csrf
                                     @method('delete')
@@ -71,7 +75,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-7">
-                                <h4>{{ $data->nama }}</h4>
+                                <h4>{{ $data->nama }} - <span class="text-info text-uppercase">{{ $data->type }}</span></h4>
                                 <span class="card-text item-company">By <a href="javascript:void(0)" class="company-name">{{ $data->penyelenggara->nama }}</a></span>
                                 <div class="ecommerce-details-price d-flex flex-wrap mt-1">
                                     <h4 class="item-price mr-1">Rp {{ number_format($data->biaya_pendaftaran, 0, '.', '.') }}</h4>
@@ -200,7 +204,11 @@
                                                             {{ $pt->anggota_1 }}
                                                         </td>
                                                         <td>
-                                                            {{ $pt->anggota_2 }}
+                                                            @if($pt->anggota_2 == '' || $pt->anggota_2 == null)
+                                                                -
+                                                            @else
+                                                                {{ $pt->anggota_2 }}
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             @if($pt->anggota_3 == '' || $pt->anggota_3 == null)
@@ -224,11 +232,7 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if($pt->tipe == 1)
-                                                                Squad
-                                                            @else
-                                                                Duo
-                                                            @endif
+                                                            <span class="text-uppercase">{{ $pt->type }}</span>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -318,6 +322,7 @@
                             </div>
                         </div>
                     </div>
+                    @if($data->type == 'duo' || $data->type == 'squad')
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="form-group">
@@ -326,6 +331,8 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+                    @if($data->type == 'squad')
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="form-group">
@@ -350,22 +357,18 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="row">
-                        <div class="col-lg-2 col-md-2">
+                        <div class="col-lg-12 col-md-12">
                             <div class="form-group">
-                                <label for="">Squad</label>
-                                <input type="radio" value="1" class="custom-control custom-radio" id="" name="squad" checked/>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-2">
-                            <div class="form-group">
-                                <label for="">Duo</label>
-                                <input type="radio" value="0" class="custom-control custom-radio" id="" name="squad"/>
+                                <label for="">Type</label>
+                                <h5 class="text-uppercase">{{ $data->type }}</h5>
                             </div>
                         </div>
                     </div>
 
                     <input type="hidden" value="{{ $data->penyelenggara->nama }}" name="penyelenggara">
+                    <input type="hidden" value="{{ $data->type }}" name="type">
                 </div>
              <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Daftar</button>

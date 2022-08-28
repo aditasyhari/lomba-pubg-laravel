@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('bukti_tf')->nullable();
             $table->rememberToken();
             $table->string('foto')->nullable();
+            $table->integer('max_post')->default(4);
+            $table->boolean('active')->default(true);
             $table->string('google_foto')->nullable();
             $table->string('google_id')->nullable();
             $table->timestamps();

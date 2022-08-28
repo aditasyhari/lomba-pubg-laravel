@@ -143,4 +143,19 @@ class UserController extends Controller
             return view('error');
         }
     }
+
+    public function statusPenyelenggara(Request $request, $id)
+    {
+        try {
+            $data = User::find($id);
+            $status = $request->status;
+            
+            $data->update(['active' => $status]);
+
+            return response()->json('success', 200);
+        } catch (Exception $e) {
+            return view('error');
+        }
+    }
+
 }

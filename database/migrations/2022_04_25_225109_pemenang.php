@@ -19,7 +19,11 @@ class Pemenang extends Migration
             $table->string('slug')->unique();
             $table->longText('isi');
             $table->string('thumbnail');
-            $table->foreignId('id_admin')->references('id_user')->on('user');
+            $table->string('bukti_point')->nullable();
+            $table->string('norek_pemenang')->nullable();
+            $table->foreignId('id_user')->references('id_user')->on('user');
+            $table->foreignId('id_tournament')->references('id_tournament')->on('tournament')->nullable();
+            $table->foreignId('id_peserta')->references('id_user')->on('user')->nullable();
             $table->timestamps();
         });
     }

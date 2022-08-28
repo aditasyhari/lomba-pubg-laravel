@@ -95,4 +95,34 @@
         });
     </script>
 @endif
+
+<script>
+    // alert("test");
+    // $(document).ready(function() {
+    //     $('.toggleActive').change(function() {
+    //         alert('test');
+    //         var status = $(this).prop('checked') == true ? 1 : 0; 
+    //         var user_id = $(this).data('id'); 
+    //         var url = '/user/status-penyelenggara/'+user_id;
+    
+    //         console.log('kdsd');
+    //         $.ajaxSetup({
+    //             headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //             }
+    //         });
+    
+    //         $.ajax({
+    //             type: "POST",
+    //             url: url,
+    //             data: {status: status},
+    //             success: function (result) {
+    //                 console.log('success update status penyelenggara');
+    //             }
+    //         });
+    //     });
+    // });
+
+</script>
+
 @endsection

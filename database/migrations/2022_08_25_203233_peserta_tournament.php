@@ -18,11 +18,11 @@ class PesertaTournament extends Migration
             $table->string('team');
             $table->string('logo');
             $table->string('anggota_1');
-            $table->string('anggota_2');
+            $table->string('anggota_2')->nullable();
             $table->string('anggota_3')->nullable();
             $table->string('anggota_4')->nullable();
             $table->string('anggota_5')->nullable();
-            $table->boolean('squad')->default(true);
+            $table->enum('type', ['solo', 'duo', 'squad'])->default('squad');
             $table->unsignedBigInteger('id_tournament');
             $table->unsignedBigInteger('id_transaksi');
             $table->unsignedBigInteger('id_peserta');

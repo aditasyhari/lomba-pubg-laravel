@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title') Tambah Berita @endsection
+@section('title') Tambah Pemenang @endsection
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/page-blog.css') }}">

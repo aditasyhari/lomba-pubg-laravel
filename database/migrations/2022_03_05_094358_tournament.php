@@ -28,6 +28,7 @@ class Tournament extends Migration
             $table->longText('deskripsi');
             $table->string('thumbnail');
             $table->string('file')->nullable();
+            $table->enum('type', ['solo', 'duo', 'squad'])->default('squad');
             $table->foreignId('id_penyelenggara')->references('id_user')->on('user');
             $table->timestamps();
         });

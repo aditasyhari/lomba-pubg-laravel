@@ -106,7 +106,7 @@
                                 </div>
                             </div>
                             <h6 class="item-name">
-                                <a class="text-body" href="{{ url('/tournament/detail/'.$d->slug) }}">{{ $d->nama }}</a>
+                                <a class="text-body" href="{{ url('/tournament/detail/'.$d->slug) }}">{{ $d->nama }} - <span class="text-info text-uppercase">{{ $d->type }}</span></a>
                                 <span class="card-text item-company">By <a href="javascript:void(0)" class="company-name">Anonymous</a></span>
                             </h6>
                             <p class="card-text item-description">
@@ -163,6 +163,22 @@
             timer: 2200,
             customClass: {
             confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false
+        });
+    </script>
+@endif
+
+@if($message = Session::get('error'))
+    <script>
+        Swal.fire({
+            // position: 'top-end',
+            icon: 'error',
+            title: '{{ $message }}',
+            showConfirmButton: false,
+            timer: 2200,
+            customClass: {
+            confirmButton: 'btn btn-danger'
             },
             buttonsStyling: false
         });

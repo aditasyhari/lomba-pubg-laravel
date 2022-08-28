@@ -231,25 +231,24 @@ $(function () {
         },
         {
           targets: -1,
-          title: 'Aksi',
+          title: 'Aktif',
           orderable: false,
           render: function (data, type, full, meta) {
             var id_user = full['id_user'];
+            var status = full['active'];
+            if(status == 1) {
+              var check = 'checked';
+            } else {
+              var check = '';
+            }
+
             return (
-              '<div class="btn-group">' +
-                '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
-                feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
-                '</a>' +
-                '<div class="dropdown-menu dropdown-menu-right">' +
-                // '<a href="user/detail/'+ id_user +
-                // '" class="dropdown-item">' +
-                // feather.icons['file-text'].toSvg({ class: 'font-small-4 mr-50' }) +
-                // 'Detail</a>' +
-                '<a href="javascript:;" class="dropdown-item delete-record" onclick="hapus('+ id_user +')">' +
-                feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' }) +
-                'Delete</a>' +
-                '</div>' +
-              '</div>'
+              `
+              <div class="custom-control custom-control-primary custom-switch">
+              <input data-id="`+id_user+`" class="toggleActive custom-control-input" onchange="toggleActive(`+id_user+`)" type="checkbox" `+check+` id="customSwitch3">
+              <label class="custom-control-label" for="customSwitch3"></label>
+              </div>
+              `
             );
           }
         }
@@ -292,6 +291,26 @@ $(function () {
   }
   
 });
+
+function toggleActive(e) {
+  var status = $('.toggleActive').prop('checked') == true ? 1 : 0; 
+  var url = '/user/status-penyelenggara/'+e;
+
+  $.ajaxSetup({
+      headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
+
+  $.ajax({
+      type: "POST",
+      url: url,
+      data: {status: status},
+      success: function (result) {
+          console.log('success update status penyelenggara');
+      }
+  });
+}
 
 function hapus(e) {
   var url = 'user/delete/'+e;

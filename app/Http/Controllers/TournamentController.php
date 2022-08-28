@@ -86,6 +86,10 @@ class TournamentController extends Controller
     public function add()
     {
         try {
+            if(Auth::user()->role == 'penyelenggara' && Auth::user()->active == 0) {
+                return back()->with('error', 'Tidak dapat membuat postingan, silahkan hubungi Admin.');
+            }
+
             $date = date("Y-m-d");
 
             return view('tournament.add', compact(['date']));
@@ -102,6 +106,7 @@ class TournamentController extends Controller
                 'lokasi' => 'required',
                 'biaya_pendaftaran' => 'required|numeric',
                 'jumlah_slot' => 'required|numeric',
+                'type' => 'required',
                 'tgl_valid' => 'required',
                 'tgl_tournament' => 'required',
                 'deskripsi' => 'required',
@@ -132,6 +137,7 @@ class TournamentController extends Controller
                     'deskripsi' => $request->deskripsi,
                     'thumbnail' => $thumbnail,
                     'file' => $file,
+                    'type' => $request->type,
                     'id_penyelenggara' => Auth::user()->id_user
                 ];
     
@@ -244,15 +250,30 @@ class TournamentController extends Controller
                 'team' => $request->team,
                 'logo' => $logo,
                 'anggota_1' => $request->anggota_1,
-                'anggota_2' => $request->anggota_2,
                 'anggota_3' => $request->anggota_3,
                 'anggota_4' => $request->anggota_4,
                 'anggota_5' => $request->anggota_5,
-                'squad' => $request->squad,
+                'type' => $request->type,
                 'id_tournament' => $tournament->id_tournament,
                 'id_transaksi' => $tr->id_transaksi,
                 'id_peserta' => Auth::user()->id_user,
             ];
+
+            if($request->anggota_2) {
+                $input['anggota_2'] = $request->anggota_2;
+            }
+
+            if($request->anggota_3) {
+                $input['anggota_3'] = $request->anggota_3;
+            }
+
+            if($request->anggota_4) {
+                $input['anggota_4'] = $request->anggota_4;
+            }
+
+            if($request->anggota_5) {
+                $input['anggota_5'] = $request->anggota_5;
+            }
 
             PesertaTournament::create($input);
             DB::commit();
@@ -261,6 +282,24 @@ class TournamentController extends Controller
         } catch (Exception $e) {
             DB::rollback();
             return view('error');
+            dd($e->getMessage());
         }
     }
+
+    public function addWinner($slug)
+    {
+        try {
+            $data = Tournament::with('penyelenggara')->where('slug', $slug)->first();
+            if($data->id_penyelenggara != Auth::user()->id_user) {
+                return back()->with('error', 'Anda tidak punya akses !');
+            }
+
+            $date = date("Y-m-d");
+    
+            return view('winner.add', compact(['date', 'data']));
+        } catch (Exception $e) {
+            return view('error');
+        }
+    }
+
 }

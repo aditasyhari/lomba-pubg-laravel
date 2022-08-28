@@ -85,7 +85,6 @@ Route::middleware('auth')->group(function () {
 
          // pemenang
          Route::get('pemenang/add', [WinnerController::class, 'add']);
-         Route::post('pemenang/add', [WinnerController::class, 'store']);
          Route::get('pemenang/edit/{slug}', [WinnerController::class, 'edit']);
          Route::put('pemenang/edit/{slug}', [WinnerController::class, 'update']);
          Route::delete('pemenang/detail/delete/{id}', [WinnerController::class, 'delete']);
@@ -96,6 +95,7 @@ Route::middleware('auth')->group(function () {
         Route::get('user/detail/{id}', [UserController::class, 'show']);
         Route::delete('user/delete/{id}', [UserController::class, 'delete']);
         Route::post('user/edit-max-post/{id}', [UserController::class, 'editMaxPost']);
+        Route::post('user/status-penyelenggara/{id}', [UserController::class, 'statusPenyelenggara']);
 
         // request penyelenggara
         Route::get('request-penyelenggara', [UserController::class, 'reqPenyelenggara']);
@@ -113,7 +113,9 @@ Route::get('news/detail/{slug}', [NewsController::class, 'detail']);
 // tournament
 Route::get('tournament', [TournamentController::class, 'index']);
 Route::get('tournament/detail/{slug}', [TournamentController::class, 'detail']);
+Route::get('tournament/detail/{slug}/add-winner', [TournamentController::class, 'addWinner']);
 
 // winner
 Route::get('pemenang', [WinnerController::class, 'index']);
 Route::get('pemenang/detail/{slug}', [WinnerController::class, 'detail']);
+Route::post('pemenang/add', [WinnerController::class, 'store']);
