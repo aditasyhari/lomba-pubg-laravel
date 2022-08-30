@@ -14,6 +14,6 @@ class Pemenang extends Model
 
     public function pembuat()
     {
-        return $this->belongsTo(User::class, 'id_admin');
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

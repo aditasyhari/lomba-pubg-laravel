@@ -19,6 +19,7 @@ class Pemenang extends Migration
             $table->string('slug')->unique();
             $table->longText('isi');
             $table->string('thumbnail');
+            $table->string('team')->nullable();
             $table->string('bukti_point')->nullable();
             $table->string('norek_pemenang')->nullable();
             $table->foreignId('id_user')->references('id_user')->on('user');

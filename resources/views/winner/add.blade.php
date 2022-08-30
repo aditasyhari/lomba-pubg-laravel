@@ -64,7 +64,7 @@
                                     </div>
                                 @endif
                                 <!-- Form -->
-                                <form action="" class="mt-2" method="post" enctype="multipart/form-data">
+                                <form action="{{ url('/pemenang/add') }}" class="mt-2" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6 col-12">
@@ -83,6 +83,18 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mb-2">
+                                                <label for="">Team Pemenang</label>
+                                                <input type="text" id="team" class="form-control" name="team" placeholder="nama team" required/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mb-2">
+                                                <label for="">No. Rekening</label>
+                                                <input type="text" id="norek_pemenang" class="form-control" name="norek_pemenang" placeholder="Contoh: BCA 678xxxx" required/>
+                                            </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="form-group mb-2">
                                                 <label>Konten</label>
@@ -98,20 +110,36 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 mb-2">
+                                        <div class="col-12 col-md-3 mb-2">
                                             <div class="border rounded p-2">
                                                 <h4 class="mb-1">Thumbnail</h4>
                                                 <div class="media flex-column flex-md-row">
-                                                    <img src="{{ asset('images/default.jpg') }}" id="blog-feature-image" class="rounded mr-2 mb-1 mb-md-0" width="130" height="110" alt="thumbnail" />
+                                                    <!-- <img src="{{ asset('images/default.jpg') }}" id="blog-feature-image" class="rounded mr-2 mb-1 mb-md-0" width="130" height="110" alt="thumbnail" /> -->
                                                     <div class="media-body">
                                                         <small class="text-muted">Recommended image resolution 800x400,<br>max image size 2mb.</small>
-                                                        <p class="my-50">
-                                                            <a href="javascript:void(0);" id="blog-image-text"></a>
-                                                        </p>
                                                         <div class="d-inline-block">
                                                             <div class="form-group mb-0">
                                                                 <div class="custom-file">
-                                                                    <input type="file" class="custom-file-input" id="blogCustomFile" name="thumbnail" accept="image/*" required/>
+                                                                    <input type="file" class="custom-file-input" id="" name="thumbnail" accept="image/*" required/>
+                                                                    <label class="custom-file-label" for="blogCustomFile">Pilih file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-3 mb-2">
+                                            <div class="border rounded p-2">
+                                                <h4 class="mb-1">Bukti Point</h4>
+                                                <div class="media flex-column flex-md-row">
+                                                    <!-- <img src="{{ asset('images/default.jpg') }}" id="blog-feature-image" class="rounded mr-2 mb-1 mb-md-0" width="130" height="110" alt="thumbnail" /> -->
+                                                    <div class="media-body">
+                                                        <small class="text-muted">Recommended image resolution 800x400,<br>max image size 2mb.</small>
+                                                        <div class="d-inline-block">
+                                                            <div class="form-group mb-0">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" id="" name="bukti_point" accept="image/*" required/>
                                                                     <label class="custom-file-label" for="blogCustomFile">Pilih file</label>
                                                                 </div>
                                                             </div>

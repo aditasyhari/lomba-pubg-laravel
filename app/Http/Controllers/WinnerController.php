@@ -50,6 +50,9 @@ class WinnerController extends Controller
                 'judul' => 'required|unique:pemenang,judul',
                 'konten' => 'required',
                 'thumbnail' => 'required',
+                'team' => 'required',
+                'norek_pemenang' => 'required',
+                'bukti_point' => 'required',
             ]);
 
             if($validator->fails()) {
@@ -59,10 +62,16 @@ class WinnerController extends Controller
             $path = "images/pemenang/thumbnail/";
             $thumbnail = uploads($request->thumbnail, $path);
 
+            $path = "images/pemenang/bukti-point/";
+            $bukti_point = uploads($request->bukti_point, $path);
+
             $input = [
                 'judul' => $request->judul,
                 'slug' => Str::slug($request->judul),
                 'isi' => $request->konten,
+                'team' => $request->team,
+                'norek_pemenang' => $request->norek_pemenang,
+                'bukti_point' => $bukti_point,
                 'thumbnail' => $thumbnail,
                 'id_user' => Auth::user()->id_user
             ];
@@ -71,6 +80,7 @@ class WinnerController extends Controller
 
             return back()->with('success', 'Info Pemenang berhasil ditambahkan !');
         } catch (Exception $e) {
+            dd($e->getMessage());
             return view('error');
         }
     }

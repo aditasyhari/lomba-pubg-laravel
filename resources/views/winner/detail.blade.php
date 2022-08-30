@@ -85,9 +85,9 @@
                                         </div>
                                     </div>
                                     <div class="my-1 py-25">
-                                        <a href="javascript:void(0);">
-                                            <div class="badge badge-pill badge-light-info mr-50">Pemenang</div>
-                                        </a>
+                                        <div class="badge badge-pill badge-light-info mr-50">Pemenang : {{ $data->team }}</div>
+                                        <div class="badge badge-pill badge-light-primary mr-50">No. rekening : {{ $data->norek_pemenang }}</div> <br>
+                                        <a target="_blank" href="{{ url('storage/images/pemenang/bukti-point/'.$data->bukti_point) }}" class="mt-2 btn btn-success btn-sm">Bukti Point</a>
                                     </div>
                                     <p class="card-text mb-2">
                                         {!! $data->isi !!}
