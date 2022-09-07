@@ -89,12 +89,14 @@
                                                 <input type="text" id="team" class="form-control" name="team" placeholder="nama team" required/>
                                             </div>
                                         </div>
+                                        @if(Auth::user()->role != 'admin')
                                         <div class="col-md-6 col-12">
                                             <div class="form-group mb-2">
                                                 <label for="">No. Rekening</label>
                                                 <input type="text" id="norek_pemenang" class="form-control" name="norek_pemenang" placeholder="Contoh: BCA 678xxxx" required/>
                                             </div>
                                         </div>
+                                        @endif
                                         <div class="col-12">
                                             <div class="form-group mb-2">
                                                 <label>Konten</label>

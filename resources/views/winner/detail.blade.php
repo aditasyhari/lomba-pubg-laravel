@@ -86,7 +86,13 @@
                                     </div>
                                     <div class="my-1 py-25">
                                         <div class="badge badge-pill badge-light-info mr-50">Pemenang : {{ $data->team }}</div>
-                                        <div class="badge badge-pill badge-light-primary mr-50">No. rekening : {{ $data->norek_pemenang }}</div> <br>
+                                        @if($data->pembuat->role == 'peserta')
+                                            <div class="badge badge-pill badge-light-success mr-50">Peserta Klaim Pemenang</div>
+                                        @endif
+                                        @if($data->norek_pemenang != '' && $data->norek_pemenang != null)
+                                            <div class="badge badge-pill badge-light-primary mr-50">No. rekening : {{ $data->norek_pemenang }}</div>
+                                        @endif
+                                        <br>
                                         <a target="_blank" href="{{ url('storage/images/pemenang/bukti-point/'.$data->bukti_point) }}" class="mt-2 btn btn-success btn-sm">Bukti Point</a>
                                     </div>
                                     <p class="card-text mb-2">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tournament;
 use App\Models\Transaksi;
+use App\Models\Setting;
 use App\Models\PesertaTournament;
 use Exception;
 use Validator;
@@ -91,8 +92,9 @@ class TournamentController extends Controller
             }
 
             $date = date("Y-m-d");
+            $setting = Setting::find(1);
 
-            return view('tournament.add', compact(['date']));
+            return view('tournament.add', compact(['date', 'setting']));
         } catch (Exception $e) {
             return view('error');
         }

@@ -15,9 +15,14 @@ class WinnerController extends Controller
     public function index()
     {
         try {
-            $data = Pemenang::with('pembuat')->orderBy('created_at', 'desc')->paginate(6);
-            $new = Pemenang::orderBy('created_at', 'desc')->limit(4)->get();
-    
+            if(Auth::user()->role == 'admin') {
+                $data = Pemenang::with('pembuat')->orderBy('created_at', 'desc')->paginate(6);
+                $new = Pemenang::orderBy('created_at', 'desc')->limit(4)->get();
+            } else {
+                $data = Pemenang::with('pembuat')->leftJoin('user as u', 'u.id_user', '=', 'pemenang.id_user')->where('role', '!=', 'peserta')->orderBy('pemenang.created_at', 'desc')->paginate(6);
+                $new = Pemenang::leftJoin('user as u', 'u.id_user', '=', 'pemenang.id_user')->where('role', '!=', 'peserta')->orderBy('pemenang.created_at', 'desc')->limit(4)->get();
+            }
+            // dd($data);
             return view('winner.index', compact(['data', 'new']));
         } catch (Exception $e) {
             return view('error');
@@ -51,7 +56,7 @@ class WinnerController extends Controller
                 'konten' => 'required',
                 'thumbnail' => 'required',
                 'team' => 'required',
-                'norek_pemenang' => 'required',
+                'norek_pemenang' => 'nullable',
                 'bukti_point' => 'required',
             ]);
 

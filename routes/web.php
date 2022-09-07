@@ -84,7 +84,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('news/detail/delete/{id}', [NewsController::class, 'delete']);
 
          // pemenang
-         Route::get('pemenang/add', [WinnerController::class, 'add']);
          Route::get('pemenang/edit/{slug}', [WinnerController::class, 'edit']);
          Route::put('pemenang/edit/{slug}', [WinnerController::class, 'update']);
          Route::delete('pemenang/detail/delete/{id}', [WinnerController::class, 'delete']);
@@ -118,4 +117,5 @@ Route::get('tournament/detail/{slug}/add-winner', [TournamentController::class, 
 // winner
 Route::get('pemenang', [WinnerController::class, 'index']);
 Route::get('pemenang/detail/{slug}', [WinnerController::class, 'detail']);
+Route::get('pemenang/add', [WinnerController::class, 'add']);
 Route::post('pemenang/add', [WinnerController::class, 'store']);

@@ -113,6 +113,12 @@
                                                 <input type="date" class="form-control" name="tgl_tournament" required/>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group mb-2">
+                                                <label for="blog-edit-status">No. Rekening (Admin)</label>
+                                                <input type="text" class="form-control" value="{{ $setting->info_bank }}"  readonly/>
+                                            </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="form-group mb-2">
                                                 <label>Deskripsi</label>

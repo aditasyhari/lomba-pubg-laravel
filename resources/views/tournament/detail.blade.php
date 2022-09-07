@@ -169,7 +169,7 @@
 
                     <!-- peserta tournament -->
                     @auth
-                    @if(Auth::user()->role == 'penyelenggara')
+                    @if(Auth::user()->role == 'penyelenggara' && $data->id_penyelenggara == Auth::user()->id_user)
                         <hr>
                         <h3 class="ml-2 mb-2">Daftar Peserta Tournament</h3>
                         <div class="content-body">

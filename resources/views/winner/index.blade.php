@@ -29,11 +29,9 @@
                 </div>
             </div>
             @auth
-                @if(Auth::user()->role == 'admin')
                 <div class="col-md-2 text-right">
                     <a href="{{ url('pemenang/add') }}" class="btn btn-primary">Tambah</a>
                 </div>
-                @endif
             @endauth
         </div>
         <div class="content-detached content-left">
@@ -71,6 +69,9 @@
                                         <a href="javascript:void(0);">
                                             <div class="badge badge-pill badge-light-info mr-50">Pemenang</div>
                                         </a>
+                                        @if($d->pembuat->role == 'peserta')
+                                            <div class="badge badge-pill badge-light-success mr-50">Peserta Klaim Pemenang</div>
+                                        @endif
                                     </div>
                                     <p class="card-text blog-content-truncate">
                                         {{ strip_tags($d->isi) }}
