@@ -258,7 +258,7 @@
         <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25"></p>
     </footer>
     <footer class="footer footer-static footer-light footer-shadow">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2022</p>
+        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2024</p>
     </footer>
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
